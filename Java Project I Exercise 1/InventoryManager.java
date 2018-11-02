@@ -1,17 +1,16 @@
 // ENSF 519-2 Project 1 Exercise 1
 // Oscar Chen & Savith Jayasekera
 
-//Note: Added private method to check for database existence before creating a new one.
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.sql.*;
 import java.util.Scanner;
 
-// Lab 10 - In Lab Exercise 1
-
-// This program allows you to create and manage a store inventory database.
-// It creates a database and datatable, then populates that table with tools from
-// items.txt.
+/**
+ *  This program allows you to create and manage a store inventory database.
+ *  It creates a database and datatable, then populates that table with tools from
+ *  items.txt.
+ */
 public class InventoryManager {
 
     public Connection jdbc_connection;
@@ -25,6 +24,9 @@ public class InventoryManager {
             login = "root",
             password = "greencreatures";
 
+    /**
+     * Sets up mySQL database connection
+     */
     public InventoryManager() {
         try {
             // If this throws an error, make sure you have added the mySQL connector JAR to the project
@@ -40,8 +42,9 @@ public class InventoryManager {
         }
     }
 
-    // Use the jdbc connection to create a new database in MySQL.
-    // (e.g. if you are connected to "jdbc:mysql://localhost:3306", the database will be created at "jdbc:mysql://localhost:3306/InventoryDB")
+    /**
+     *  Creates a database if it does not exist, and then select it for use.
+     */
     public void createDB() {
 
         if (checkDBExistence()) {   //if database of same name already exist
@@ -70,7 +73,10 @@ public class InventoryManager {
 
     }
 
-    //check if database already exist
+    /**
+     * Private utility method used to check database existence.
+     * @return True if database already exist, otherwise false.
+     */
     private boolean checkDBExistence() {
 
         boolean dbExist = false;
@@ -95,8 +101,9 @@ public class InventoryManager {
         return dbExist;
     }
 
-
-    // Create a data table inside of the database to hold tools
+    /**
+     * Create a data table inside of the database to hold tools
+     */
     public void createTable() {
         String sql = "CREATE TABLE " + tableName + "(" +
                 "ID INT(4) NOT NULL, " +
@@ -114,7 +121,9 @@ public class InventoryManager {
         }
     }
 
-    // Removes the data table from the database (and all the data held within it!)
+    /**
+     * Removes the data table from the database (and all the data held within it!)
+     */
     public void removeTable() {
         String sql = "DROP TABLE " + tableName;
         try {
@@ -126,7 +135,9 @@ public class InventoryManager {
         }
     }
 
-    // Fills the data table with all the tools from the text file 'items.txt' if found
+    /**
+     * Fills the data table with all the tools from the text file 'items.txt' if found
+     */
     public void fillTable() {
         try {
             Scanner sc = new Scanner(new FileReader(dataFile));
@@ -146,7 +157,10 @@ public class InventoryManager {
         }
     }
 
-    // Add a tool to the database table
+    /**
+     * Add a tool to the database table
+     * @param tool
+     */
     public void addItem(Tool tool) {
 
         try {
@@ -163,8 +177,14 @@ public class InventoryManager {
         }
     }
 
-    // This method should search the database table for a tool matching the toolID parameter and return that tool.
-    // It should return null if no tools matching that ID are found.
+
+
+    /**
+     * This method should search the database table for a tool matching the toolID parameter and return that tool.
+     * It should return null if no tools matching that ID are found.
+     * @param toolID
+     * @return
+     */
     public Tool searchTool(int toolID) {
         String sql = "SELECT * FROM " + tableName + " WHERE ID = ? ";
         ResultSet tool;
@@ -187,7 +207,9 @@ public class InventoryManager {
         return null;
     }
 
-    // Prints all the items in the database to console
+    /**
+     * Prints all the items in the database to console
+     */
     public void printTable() {
         try {
             String sql = "SELECT * FROM " + tableName;
@@ -207,9 +229,14 @@ public class InventoryManager {
         }
     }
 
+    /**
+     * Main.
+     * @param args
+     */
     public static void main(String args[]) {
         InventoryManager inventory = new InventoryManager();
 
+        //note: this method will check for database existence before creating a new one
         inventory.createDB();
 
         inventory.createTable();
