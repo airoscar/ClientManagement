@@ -12,6 +12,9 @@ public class SQLtest {
             ///////Create a new database
 //            myConnection.createStatement().execute("CREATE DATABASE demo");
 
+            ///////Create a new database alternative
+            PreparedStatement preparedstmt = myConnection.prepareStatement("CREATE DATABASE demo");
+            preparedstmt.execute();
 
             ///////Delete a database
 //            myConnection.createStatement().execute("DROP DATABASE demo");
@@ -21,14 +24,14 @@ public class SQLtest {
             myConnection.prepareStatement("USE demo").execute();
 
 
-            //////read from data table
-            ResultSet myRs = myStmt.executeQuery("SELECT * FROM employees");
-            while (myRs.next()) {
-                System.out.println(myRs.getString("id") + ","
-                        + myRs.getString("last_name") + ", "
-                        + myRs.getNString("first_name"));
-            }
-            /////End of read
+//            //////read from data table
+//            ResultSet myRs = myStmt.executeQuery("SELECT * FROM employees");
+//            while (myRs.next()) {
+//                System.out.println(myRs.getString("id") + ","
+//                        + myRs.getString("last_name") + ", "
+//                        + myRs.getNString("first_name"));
+//            }
+//            /////End of read
 
 //            //////Create table named employees
 //            String newTable = "CREATE TABLE employees ("
