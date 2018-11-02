@@ -2,6 +2,28 @@ import java.sql.*;
 
 public class SQLtest {
 
+    /////////Check database existence
+    private boolean checkDBExistence(Connection myConn, String databaseName) throws SQLException {
+
+        boolean dbExist = false;
+        ResultSet resultSet = null;
+
+        resultSet = myConn.getMetaData().getCatalogs();
+
+        while (resultSet.next()) {
+            // Get the database name, which is at position 1
+            String dbName = resultSet.getString(1);
+            if (dbName.equalsIgnoreCase(databaseName)) {
+                dbExist = true;
+            }
+        }
+
+        resultSet.close();
+
+        return dbExist;
+    }
+    //////////End of check database existence
+
     public static void main(String[] args) {
 
         try {
