@@ -6,11 +6,23 @@ public class SQLtest {
 
         try {
 
-            Connection myConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/demo?autoReconnect=true&useSSL=false", "root", "greencreatures");
+            Connection myConnection = DriverManager.getConnection("jdbc:mysql://localhost/", "root", "greencreatures");
             Statement myStmt = myConnection.createStatement();
 
+            ///////Create a new database
+//            myConnection.createStatement().execute("CREATE DATABASE demo");
+
+
+            ///////Delete a database
+//            myConnection.createStatement().execute("DROP DATABASE demo");
+
+
+            ///////Select a specific database by name
+            myConnection.prepareStatement("USE demo").execute();
+
+
             //////read from data table
-            ResultSet myRs = myStmt.executeQuery("select * from employees");
+            ResultSet myRs = myStmt.executeQuery("SELECT * FROM employees");
             while (myRs.next()) {
                 System.out.println(myRs.getString("id") + ","
                         + myRs.getString("last_name") + ", "
@@ -28,14 +40,14 @@ public class SQLtest {
 //            //////End of table creation
 
 
-            //////insert into data table
-            String query = " insert into employees (last_name, first_name, middle_name) values (?, ?, ?)";
-            PreparedStatement preparedStmt = myConnection.prepareStatement(query);
-            preparedStmt.setString (1, "Jay");
-            preparedStmt.setString (2, "Savi");
-            preparedStmt.setString(3,"Chand");
-            preparedStmt.execute();
-            //////End of insert
+//            //////insert into data table
+//            String query = " insert into employees (last_name, first_name, middle_name) values (?, ?, ?)";
+//            PreparedStatement preparedStmt = myConnection.prepareStatement(query);
+//            preparedStmt.setString (1, "Jay");
+//            preparedStmt.setString (2, "Savi");
+//            preparedStmt.setString(3,"Chand");
+//            preparedStmt.execute();
+//            //////End of insert
 
 
 //            //////Add column to data table
