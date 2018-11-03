@@ -52,18 +52,6 @@ public class ClientManagementSystemView extends JFrame {
 
         add(BorderLayout.NORTH, northPanel);
         add(BorderLayout.CENTER, centerPanel);
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     private JPanel northPanel(){
@@ -128,7 +116,7 @@ public class ClientManagementSystemView extends JFrame {
 
         JPanel searchSelectionSouthPanel = new JPanel();
         searchSelectionSouthPanel.setBorder(BorderFactory.createEmptyBorder(0,10,40,10));
-        searchSelectionSouthPanel.setLayout(new BorderLayout(20,30));
+        searchSelectionSouthPanel.setLayout(new BorderLayout(10,30));
 
         JLabel searchParameterExplanation = new JLabel("Enter the search parameter below:");
         searchParameterExplanation.setFont(new Font("SANS_SERIF", Font.PLAIN, 12));
@@ -170,8 +158,8 @@ public class ClientManagementSystemView extends JFrame {
 
 
         JPanel clientInformationSectionCenterPanel = new JPanel();
-        clientInformationSectionCenterPanel.setBorder(new EmptyBorder(40,110,40,110));
-        clientInformationSectionCenterPanel.setLayout(new GridLayout(7,2,-10,50));
+        clientInformationSectionCenterPanel.setBorder(new EmptyBorder(40,90,40,90));
+        clientInformationSectionCenterPanel.setLayout(new GridLayout(7,2,-10,45));
 
         clientInformationSectionCenterPanel.add(new JLabel("Client ID:"));
         clientInformationSectionCenterPanel.add(clientIDTextField);
