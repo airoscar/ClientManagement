@@ -9,9 +9,9 @@ public class ClientManagementSystemView extends JFrame {
     //the search results should be saved in this DefaultListModel
     DefaultListModel searchResutls;
 
-    JRadioButton clientIDSearch = new JRadioButton("Client ID");
-    JRadioButton lastNameSearch = new JRadioButton("Last Name");
-    JRadioButton clientTypeSearch = new JRadioButton("Client Type");
+    JRadioButton clientIDSearchButton = new JRadioButton("Client ID");
+    JRadioButton lastNameSearchButton = new JRadioButton("Last Name");
+    JRadioButton clientTypeSearchButton = new JRadioButton("Client Type");
 
     /**
      * Creates the main window of the user interface
@@ -79,12 +79,13 @@ public class ClientManagementSystemView extends JFrame {
 
     private JPanel centerPanel(){
 
-        //This panel is the main panel with two sections split horizontally: Search Client section on the left
+        //This panel is the main panel with two sections split vertically: Search Client section on the left
         //and the Client Information section on the right
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new GridLayout(1,2));
 
-        //This panel is the Search Client section. It is split vertically into: Search Selection and Search Results
+        //This panel is the Search Client section. It is split horizontally into: Search Selection on top and
+        //Search Results on the bottom
         JPanel searchSection = new JPanel();
         searchSection.setBorder(BorderFactory.createLineBorder(Color.black));
         searchSection.setLayout(new GridLayout(2,1));
@@ -93,36 +94,66 @@ public class ClientManagementSystemView extends JFrame {
         JPanel searchSelection = new JPanel();
 
         searchSelection.setBorder(BorderFactory.createLineBorder(Color.black));
-        searchSelection.setLayout(new BoxLayout(searchSelection, BoxLayout.Y_AXIS));
+        searchSelection.setLayout(new BorderLayout(0,50));
 
-        JLabel searchSelectionLabel = new JLabel("Search Clients");
+        searchSelection.add(new JLabel("Search Clients",SwingConstants.CENTER), BorderLayout.NORTH);
+
+        JPanel searchSelectionCenterPanel = new JPanel();
+
+        searchSelectionCenterPanel.setLayout(new BorderLayout(0,10));
+
+        JLabel searchSelectionExplanation = new JLabel("Select type of search to be performed:");
+        searchSelectionExplanation.setFont(new Font("SANS_SERIF", Font.PLAIN, 12));
+        searchSelectionCenterPanel.add(searchSelectionExplanation, BorderLayout.NORTH);
+
+        ButtonGroup searchSelectionButtons = new ButtonGroup();
+        searchSelectionButtons.add(clientIDSearchButton);
+        searchSelectionButtons.add(lastNameSearchButton);
+        searchSelectionButtons.add(clientTypeSearchButton);
+
+        JPanel searchSelectionCenterPanelButtons = new JPanel();
+        searchSelectionCenterPanelButtons.setLayout(new BoxLayout(searchSelectionCenterPanelButtons, BoxLayout.Y_AXIS));
+        searchSelectionCenterPanelButtons.add(clientIDSearchButton);
+        searchSelectionCenterPanelButtons.add(lastNameSearchButton);
+        searchSelectionCenterPanelButtons.add(clientTypeSearchButton);
+
+        clientIDSearchButton.setAlignmentX(LEFT_ALIGNMENT);
+        lastNameSearchButton.setAlignmentX(LEFT_ALIGNMENT);
+        clientTypeSearchButton.setAlignmentX(LEFT_ALIGNMENT);
+
+        searchSelectionCenterPanel.add(searchSelectionCenterPanelButtons, BorderLayout.CENTER);
+
+
+
+        searchSelection.add(searchSelectionCenterPanel, BorderLayout.CENTER);
+
+
+
+
+
+        /*JLabel searchSelectionLabel = new JLabel("Search Clients");
         searchSelectionLabel.setAlignmentX(CENTER_ALIGNMENT);
 
         JLabel searchSelectionExplanation = new JLabel("Select type of search to be performed:");
         searchSelectionExplanation.setFont(new Font("SANS_SERIF", Font.PLAIN, 12));
-        searchSelectionExplanation.setAlignmentX(CENTER_ALIGNMENT);
-
-        ButtonGroup searchSelectionButtons = new ButtonGroup();
-        searchSelectionButtons.add(clientIDSearch);
-        searchSelectionButtons.add(lastNameSearch);
-        searchSelectionButtons.add(clientTypeSearch);
-
-
-        clientIDSearch.setAlignmentX(CENTER_ALIGNMENT);
-        lastNameSearch.setAlignmentX(CENTER_ALIGNMENT);
-        clientTypeSearch.setAlignmentX(CENTER_ALIGNMENT);
+        searchSelectionExplanation.setAlignmentX(CENTER_ALIGNMENT);*/
 
 
 
-        searchSelection.add(searchSelectionLabel);
+
+
+
+
+
+        /*searchSelection.add(searchSelectionLabel);
         searchSelection.add(Box.createRigidArea(new Dimension(0,20)));
         searchSelection.add(searchSelectionExplanation);
-        searchSelection.add(Box.createRigidArea(new Dimension(0,20)));
+        searchSelection.add(Box.createRigidArea(new Dimension(0,20)));*/
 
-        searchSelection.add(clientIDSearch);
-        searchSelection.add(lastNameSearch);
-        searchSelection.add(clientTypeSearch);
-
+        /*searchSelection.add(clientIDSearchButton);
+        searchSelection.add(lastNameSearchButton);
+        searchSelection.add(clientTypeSearchButton);
+*/
 
 
 
