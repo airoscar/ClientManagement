@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 /**
@@ -7,11 +8,28 @@ import java.awt.*;
 public class ClientManagementSystemView extends JFrame {
 
     //the search results should be saved in this DefaultListModel
-    DefaultListModel searchResutls;
+    DefaultListModel searchResults = new DefaultListModel();
 
     JRadioButton clientIDSearchButton = new JRadioButton("Client ID");
     JRadioButton lastNameSearchButton = new JRadioButton("Last Name");
     JRadioButton clientTypeSearchButton = new JRadioButton("Client Type");
+
+    JTextField searchBoxTextField = new JTextField(15);
+    JButton searchButton = new JButton("Search");
+    JButton clearSearchButton = new JButton("Clear Search");
+
+    JTextField clientIDTextField = new JTextField();
+    JTextField firstNameTextField = new JTextField();
+    JTextField lastNameTextField = new JTextField();
+    JTextField addressTextField = new JTextField();
+    JTextField postalCodeTextField = new JTextField();
+    JTextField phoneNumberTextField = new JTextField();
+    JSpinner clientTypeSpinner = new JSpinner();
+
+    JButton saveButton = new JButton("Save");
+    JButton deleteButton = new JButton("Delete");
+    JButton clearButton = new JButton("Clear");
+
 
     /**
      * Creates the main window of the user interface
@@ -34,8 +52,7 @@ public class ClientManagementSystemView extends JFrame {
 
         add(BorderLayout.NORTH, northPanel);
         add(BorderLayout.CENTER, centerPanel);
-//        add(BorderLayout.LINE_END, eastPanel);
-//        add(BorderLayout.CENTER, new JPanel());
+
 
 
 
@@ -60,22 +77,6 @@ public class ClientManagementSystemView extends JFrame {
         return northPanel;
     }
 
-    /*private JSplitPane westPanel(){
-        JPanel searchSection = new JPanel();
-        searchSection.add(new JLabel("Search Clients", SwingConstants.CENTER));
-
-
-        JPanel searchResultsSection = new JPanel();
-        //JList searchResults = new JList(searchResutls);
-        searchResultsSection.add(new JLabel("Search Results:"));
-        //searchResultsSection.add(searchResults);
-
-        JSplitPane westPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, searchSection, searchResultsSection);
-        westPanel.setResizeWeight(.5);
-        westPanel.setEnabled(false);
-
-        return westPanel;
-    }*/
 
     private JPanel centerPanel(){
 
@@ -99,7 +100,7 @@ public class ClientManagementSystemView extends JFrame {
         searchSelection.add(new JLabel("Search Clients",SwingConstants.CENTER), BorderLayout.NORTH);
 
         JPanel searchSelectionCenterPanel = new JPanel();
-
+        searchSelectionCenterPanel.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
         searchSelectionCenterPanel.setLayout(new BorderLayout(0,10));
 
         JLabel searchSelectionExplanation = new JLabel("Select type of search to be performed:");
@@ -125,48 +126,37 @@ public class ClientManagementSystemView extends JFrame {
 
 
 
+        JPanel searchSelectionSouthPanel = new JPanel();
+        searchSelectionSouthPanel.setBorder(BorderFactory.createEmptyBorder(0,10,40,10));
+        searchSelectionSouthPanel.setLayout(new BorderLayout(20,30));
+
+        JLabel searchParameterExplanation = new JLabel("Enter the search parameter below:");
+        searchParameterExplanation.setFont(new Font("SANS_SERIF", Font.PLAIN, 12));
+        searchSelectionSouthPanel.add(searchParameterExplanation, BorderLayout.NORTH);
+
+        searchSelectionSouthPanel.add(searchBoxTextField, BorderLayout.WEST);
+        searchSelectionSouthPanel.add(searchButton, BorderLayout.CENTER);
+        searchSelectionSouthPanel.add(clearSearchButton, BorderLayout.EAST);
+
+
+
+
+        //completing the search selection section
         searchSelection.add(searchSelectionCenterPanel, BorderLayout.CENTER);
+        searchSelection.add(searchSelectionSouthPanel, BorderLayout.SOUTH);
 
-
-
-
-
-        /*JLabel searchSelectionLabel = new JLabel("Search Clients");
-        searchSelectionLabel.setAlignmentX(CENTER_ALIGNMENT);
-
-        JLabel searchSelectionExplanation = new JLabel("Select type of search to be performed:");
-        searchSelectionExplanation.setFont(new Font("SANS_SERIF", Font.PLAIN, 12));
-        searchSelectionExplanation.setAlignmentX(CENTER_ALIGNMENT);*/
-
-
-
-
-
-
-
-
-        /*searchSelection.add(searchSelectionLabel);
-        searchSelection.add(Box.createRigidArea(new Dimension(0,20)));
-        searchSelection.add(searchSelectionExplanation);
-        searchSelection.add(Box.createRigidArea(new Dimension(0,20)));*/
-
-        /*searchSelection.add(clientIDSearchButton);
-        searchSelection.add(lastNameSearchButton);
-        searchSelection.add(clientTypeSearchButton);
-*/
 
 
 
         //Creates the Search Results Panel
         JPanel searchResultsPanel = new JPanel();
         searchResultsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        searchResultsPanel.setLayout(new BoxLayout(searchResultsPanel, BoxLayout.Y_AXIS));
-        //JList searchResults = new JList(searchResutls);
-        JLabel searchResultsPanelLabel = new JLabel("Search Results");
-        searchResultsPanelLabel.setAlignmentX(CENTER_ALIGNMENT);
-        searchResultsPanel.add(searchResultsPanelLabel);
-        searchResultsPanel.add(Box.createRigidArea(new Dimension(0,10)));
-        //searchResultsSection.add(searchResults);
+        searchResultsPanel.setLayout(new BorderLayout(0,10));
+        JList searchResultList = new JList(searchResults);
+        JLabel searchResultsPanelLabel = new JLabel("Search Results", SwingConstants.CENTER);
+        searchResultsPanel.add(searchResultsPanelLabel,BorderLayout.NORTH);
+        searchResultsPanel.add(searchResultList, BorderLayout.CENTER);
+        searchResultsPanel.add(new JScrollPane(searchResultList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER));
 
         searchSection.add(searchSelection);
         searchSection.add(searchResultsPanel);
@@ -174,10 +164,41 @@ public class ClientManagementSystemView extends JFrame {
         //Creates the Client Information section
         JPanel clientInformationSection = new JPanel();
         clientInformationSection.setBorder(BorderFactory.createLineBorder(Color.black));
-        clientInformationSection.setLayout(new BoxLayout(clientInformationSection, BoxLayout.Y_AXIS));
-        JLabel clientInformationSectionLabel = new JLabel("Client Information");
-        clientInformationSectionLabel.setAlignmentX(CENTER_ALIGNMENT);
-        clientInformationSection.add(clientInformationSectionLabel);
+        clientInformationSection.setLayout(new BorderLayout(0,30));
+        JLabel clientInformationSectionLabel = new JLabel("Client Information", SwingConstants.CENTER);
+        clientInformationSection.add(clientInformationSectionLabel, BorderLayout.NORTH);
+
+
+        JPanel clientInformationSectionCenterPanel = new JPanel();
+        clientInformationSectionCenterPanel.setBorder(new EmptyBorder(40,110,40,110));
+        clientInformationSectionCenterPanel.setLayout(new GridLayout(7,2,-10,50));
+
+        clientInformationSectionCenterPanel.add(new JLabel("Client ID:"));
+        clientInformationSectionCenterPanel.add(clientIDTextField);
+        clientInformationSectionCenterPanel.add(new JLabel("First Name:"));
+        clientInformationSectionCenterPanel.add(firstNameTextField);
+        clientInformationSectionCenterPanel.add(new JLabel("Last Name:"));
+        clientInformationSectionCenterPanel.add(lastNameTextField);
+        clientInformationSectionCenterPanel.add(new JLabel("Address:"));
+        clientInformationSectionCenterPanel.add(addressTextField);
+        clientInformationSectionCenterPanel.add(new JLabel("Postal Code:"));
+        clientInformationSectionCenterPanel.add(postalCodeTextField);
+        clientInformationSectionCenterPanel.add(new JLabel("Phone Number:"));
+        clientInformationSectionCenterPanel.add(phoneNumberTextField);
+        clientInformationSectionCenterPanel.add(new JLabel("Client Type:"));
+        clientInformationSectionCenterPanel.add(clientTypeSpinner);
+
+        clientInformationSection.add(clientInformationSectionCenterPanel, BorderLayout.CENTER);
+
+        JPanel clientInformationSectionSouthPanel = new JPanel();
+        clientInformationSectionSouthPanel.setLayout(new GridLayout(1,3,30,0));
+        clientInformationSectionSouthPanel.setBorder(new EmptyBorder(0,50,40,50));
+        clientInformationSectionSouthPanel.add(saveButton);
+        clientInformationSectionSouthPanel.add(deleteButton);
+        clientInformationSectionSouthPanel.add(clearButton);
+
+        clientInformationSection.add(clientInformationSectionSouthPanel, BorderLayout.SOUTH);
+
 
         centerPanel.add(searchSection);
         centerPanel.add(clientInformationSection);
