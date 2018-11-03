@@ -7,7 +7,7 @@ public class ClientManagementSystemData {
     String password;
 
     /**
-     * Set usernmae, password, and database name.
+     * Setter method for username, password, and database name.
      * @param username
      * @param password
      * @param dbName
@@ -24,7 +24,7 @@ public class ClientManagementSystemData {
      */
     public void initializeDatabase() throws SQLException {
 
-        dbConnection = DriverManager.getConnection("jdbc:mysql://localhost/", username, password);
+        dbConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/", username, password);
 
         if (!checkDBExistence()) {
             dbConnection.createStatement().execute("CREATE DATABASE " + dbName);
@@ -57,5 +57,7 @@ public class ClientManagementSystemData {
 
         return dbExist;
     }
+
+
 
 }

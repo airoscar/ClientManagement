@@ -180,7 +180,7 @@ public class InventoryManager {
 
 
     /**
-     * This method should searchButton the database table for a tool matching the toolID parameter and return that tool.
+     * This method should search the database table for a tool matching the toolID parameter and return that tool.
      * It should return null if no tools matching that ID are found.
      * @param toolID
      * @return
