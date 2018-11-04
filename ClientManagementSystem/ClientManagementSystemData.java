@@ -5,6 +5,7 @@
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -45,7 +46,6 @@ public class ClientManagementSystemData {
             dbConnection.createStatement().execute("CREATE DATABASE " + dbName);
         }
 
-        //select database for use
         dbConnection.createStatement().execute("USE " + dbName);
 
         if (!checkDataTable(dbName)) { //create new table in database if existing one not found
@@ -174,14 +174,6 @@ public class ClientManagementSystemData {
         return number;
     }
 
-    public Object search(String searchPhrase) {
-
-
-
-
-        return null;
-    }
-
     /**
      * Utility method used to create a new data table.
      *
@@ -225,6 +217,87 @@ public class ClientManagementSystemData {
             }
         }
         return false;
+    }
+
+    /**
+     * Search for a phrase in all of the columns. </br>
+     * This method utilizes MySQL's Natural Language Full-Text Search, </br>
+     * which requires the database to be set up using InnoDB engine. </br>
+     * Returns an ArrayList of objects of type Client.
+     *
+     * @param searchPhrase
+     * @return
+     * @throws SQLException
+     */
+    public ArrayList<Client> defaultSearch(String searchPhrase) throws SQLException {
+
+        String query = "SELECT * FROM " + dataTableName +
+                " WHERE MATCH(firstname, lastname, address, postalCod, phoneNumber)" +
+                " AGAINST ('" + searchPhrase + "' IN NATURAL LANGUAGE MODE);";
+
+        ResultSet result = dbConnection.createStatement().executeQuery(query);
+
+        return parseResultSetToList(result);
+    }
+
+    /**
+     * Search for a client by looking for a phrase in a specific column.
+     * @param phrase
+     * @param column
+     * @return
+     * @throws SQLException
+     */
+    public ArrayList<Client> searchColumn(String phrase, String column) throws SQLException {
+        String query = "SELECT * FROM " + dataTableName + " WHERE " + column + " LIKE '%" + phrase + "%'";
+
+        ResultSet result = dbConnection.createStatement().executeQuery(query);
+
+        return parseResultSetToList(result);
+    }
+
+    /**
+     * Private utility methods used by search methods. </br>
+     * Accepts an objection of type ResultSet as parameter, puts content of set into an ArrayList of Client objects.
+     *
+     * @param result
+     * @return
+     * @throws SQLException
+     */
+    private ArrayList<Client> parseResultSetToList(ResultSet result) throws SQLException {
+        ArrayList<Client> resultList = new ArrayList<>();
+        while (result.next()) {
+            Client resultClient = new Client();
+            resultClient.setDataID(result.getString("id"));
+            resultClient.setFirstName(result.getString("firstname"));
+            resultClient.setLastName(result.getString("lastname"));
+            resultClient.setAddress(result.getString("address"));
+            resultClient.setPostalCode(result.getString("postalCod"));
+            resultClient.setPhoneNumber(result.getString("phoneNumber"));
+            resultClient.setClientType(result.getString("clientType"));
+            resultList.add(resultClient);
+        }
+
+        return resultList;
+    }
+
+    /**
+     * Remove a client by providing the client's id from the database.
+     *
+     * @param id
+     * @throws SQLException
+     */
+    public void deleteClient(int id) throws SQLException {
+        dbConnection.createStatement().execute(" DELETE from " + dataTableName + " WHERE id = " + id);
+    }
+
+    /**
+     * Remove a client by providing the client as an object of type Client
+     *
+     * @param client
+     * @throws SQLException
+     */
+    public void deleteClient(Client client) throws SQLException {
+        deleteClient(client.getDataID());
     }
 
     /**
@@ -323,6 +396,7 @@ public class ClientManagementSystemData {
         return dbExist;
     }
 
+
     //code testing
     public static void main(String[] args) {
         ClientManagementSystemData myDB = new ClientManagementSystemData();
@@ -330,7 +404,22 @@ public class ClientManagementSystemData {
 
         try {
             myDB.initializeDatabase();
-            myDB.addClient(new Client("Cool", "Guy", "123 Srilankadabada Drive", "A7K5J5", "3063731234", "C"));
+//            myDB.addClient(new Client("Co", "Guy", "123 Sri lankadabada Drive", "A7K5J5", "3063731234", "C"));
+//            myDB.addClient(new Client("Mot", "Teres", "34 Sri Drive", "A7K 5J5", "306-373-3065", "c"));
+//            myDB.addClient(new Client("Saul", "Goodman", "123 Breaking Boulevard", "S4P 5J5", "400-3731234", "r"));
+//            myDB.addClient(new Client("Bruno", "King", "Kingdom Drive", "A7P5J5", "587633-7878", "R"));
+
+//            //Testing Search method.
+//            ArrayList<Client> list = myDB.defaultSearch("sri");
+            ArrayList<Client> list = myDB.searchColumn("sri", "address");
+
+            Iterator it = list.iterator();
+            while (it.hasNext()) {
+                System.out.println(it.next().toString());
+            }
+
+//            myDB.deleteClient(1);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

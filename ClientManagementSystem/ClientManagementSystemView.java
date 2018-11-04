@@ -198,7 +198,6 @@ public class ClientManagementSystemView extends JFrame {
 
         return centerPanel;
 
-
     }
 
 

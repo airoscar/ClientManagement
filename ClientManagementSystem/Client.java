@@ -86,8 +86,8 @@ public class Client {
         return clientType;
     }
 
-    public void setDataID(int dataID) {
-        this.dataID = dataID;
+    public void setDataID(String dataID) {
+        this.dataID = Integer.parseInt(dataID);
     }
 
     public void setFirstName(String firstName) {
