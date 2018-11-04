@@ -37,14 +37,11 @@ public class ClientManagementSystemData {
         dbConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/", username, password);
 
         if (!checkDBExistence()) {  //create new database if it doesn't already exist
-
             dbConnection.createStatement().execute("CREATE DATABASE " + dbName);
-
         }
 
         //select database for use
         dbConnection.createStatement().execute("USE " + dbName);
-
 
         if (!checkDataTable(dbName)) { //create new table in database if existing one not found
             createNewTable();
@@ -55,6 +52,7 @@ public class ClientManagementSystemData {
 
     /**
      * Called upon to add a client entry into database.
+     *
      * @param clientData
      * @throws SQLException
      */
@@ -83,6 +81,7 @@ public class ClientManagementSystemData {
      * Verify the input data, make neccessary changes to format if needed to maintain format consistency. </br>
      * Returns null if the input data does not meet requirement. </br>
      * Returns a re-formatted array of String type ready that meet format requirements.
+     *
      * @param clientData
      * @return
      */
@@ -178,19 +177,20 @@ public class ClientManagementSystemData {
 
     /**
      * Utility method used to create a new data table.
+     *
      * @throws SQLException
      */
     private void createNewTable() throws SQLException {
 
         String newTable = "CREATE TABLE " + dataTableName
-                + " (id INTEGER NOT NULL AUTO_INCREMENT,"
-                //+ "firstname VARCHAR(20),"
-                //+ "lastname VARCHAR(20),"
-                //+ "address VARCHAR(50),"
-                //+ "postalCod CHAR(7),"
-                //+ "phoneNumber CHAR(12),"
-                //+ "clientType CHAR(1),"
-                + "primary key (id))";
+                + " (id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,"
+                + "firstname VARCHAR(20),"
+                + "lastname VARCHAR(20),"
+                + "address VARCHAR(50),"
+                + "postalCod CHAR(7),"
+                + "phoneNumber CHAR(12),"
+                + "clientType CHAR(1),"
+                + "FULLTEXT(firstname, lastname, address, postalCod, phoneNumber)) ENGINE = InnoDB";
         dbConnection.createStatement().execute(newTable);
     }
 
@@ -323,7 +323,7 @@ public class ClientManagementSystemData {
 
         try {
             myDB.initializeDatabase();
-            myDB.addClient(new String[]{ "ter", "123LeValley", "S7K3J5", "306373-1234", "c"});
+            myDB.addClient(new String[]{"Xool", "Guy", "123LeValley", "S7K3J5", "306373-1234", "c"});
         } catch (SQLException e) {
             e.printStackTrace();
         }
