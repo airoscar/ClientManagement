@@ -24,6 +24,14 @@ public class Client {
     }
 
     /**
+     * Constructor that takes dataID attribute.
+     * @param dataID
+     */
+    public Client(int dataID) {
+        this.dataID = dataID;
+    }
+
+    /**
      * Constructor which constructs with all attributes.
      * @param dataID
      * @param firstName

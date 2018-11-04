@@ -13,27 +13,27 @@ import java.awt.*;
 public class ClientManagementSystemView extends JFrame {
 
     //the search results should be saved in this DefaultListModel
-    DefaultListModel searchResults = new DefaultListModel();
+    private DefaultListModel searchResults = new DefaultListModel();
 
-    JRadioButton clientIDSearchButton = new JRadioButton("Client ID");
-    JRadioButton lastNameSearchButton = new JRadioButton("Last Name");
-    JRadioButton clientTypeSearchButton = new JRadioButton("Client Type");
+    private JRadioButton clientIDSearchButton = new JRadioButton("Client ID");
+    private JRadioButton lastNameSearchButton = new JRadioButton("Last Name");
+    private JRadioButton clientTypeSearchButton = new JRadioButton("Client Type");
 
-    JTextField searchBoxTextField = new JTextField(15);
-    JButton searchButton = new JButton("Search");
-    JButton clearSearchButton = new JButton("Clear Search");
+    private JTextField searchBoxTextField = new JTextField(15);
+    private JButton searchButton = new JButton("Search");
+    private JButton clearSearchButton = new JButton("Clear Search");
 
-    JTextField clientIDTextField = new JTextField();
-    JTextField firstNameTextField = new JTextField();
-    JTextField lastNameTextField = new JTextField();
-    JTextField addressTextField = new JTextField();
-    JTextField postalCodeTextField = new JTextField();
-    JTextField phoneNumberTextField = new JTextField();
-    JSpinner clientTypeSpinner = new JSpinner();
+    private JTextField clientIDTextField = new JTextField();
+    private JTextField firstNameTextField = new JTextField();
+    private JTextField lastNameTextField = new JTextField();
+    private JTextField addressTextField = new JTextField();
+    private JTextField postalCodeTextField = new JTextField();
+    private JTextField phoneNumberTextField = new JTextField();
+    private JSpinner clientTypeSpinner = new JSpinner();
 
-    JButton saveButton = new JButton("Save");
-    JButton deleteButton = new JButton("Delete");
-    JButton clearButton = new JButton("Clear");
+    private JButton saveButton = new JButton("Save");
+    private JButton deleteButton = new JButton("Delete");
+    private JButton clearButton = new JButton("Clear");
 
 
     /**
@@ -117,8 +117,6 @@ public class ClientManagementSystemView extends JFrame {
 
         searchSelectionCenterPanel.add(searchSelectionCenterPanelButtons, BorderLayout.CENTER);
 
-
-
         JPanel searchSelectionSouthPanel = new JPanel();
         searchSelectionSouthPanel.setBorder(BorderFactory.createEmptyBorder(0,10,40,10));
         searchSelectionSouthPanel.setLayout(new BorderLayout(10,30));
@@ -131,15 +129,9 @@ public class ClientManagementSystemView extends JFrame {
         searchSelectionSouthPanel.add(searchButton, BorderLayout.CENTER);
         searchSelectionSouthPanel.add(clearSearchButton, BorderLayout.EAST);
 
-
-
-
         //completing the search selection section
         searchSelection.add(searchSelectionCenterPanel, BorderLayout.CENTER);
         searchSelection.add(searchSelectionSouthPanel, BorderLayout.SOUTH);
-
-
-
 
         //Creates the Search Results Panel
         JPanel searchResultsPanel = new JPanel();
@@ -160,7 +152,6 @@ public class ClientManagementSystemView extends JFrame {
         clientInformationSection.setLayout(new BorderLayout(0,30));
         JLabel clientInformationSectionLabel = new JLabel("Client Information", SwingConstants.CENTER);
         clientInformationSection.add(clientInformationSectionLabel, BorderLayout.NORTH);
-
 
         JPanel clientInformationSectionCenterPanel = new JPanel();
         clientInformationSectionCenterPanel.setBorder(new EmptyBorder(40,90,40,90));

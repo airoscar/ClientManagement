@@ -18,7 +18,7 @@ public class ClientManagementSystemData {
     private String username;
     private String password;
     private String dataTableName = "client_table";
-    Map<String, String> dataDictionary = new HashMap<String, String>();
+    private Map<String, String> dataDictionary = new HashMap<String, String>();
 
     /**
      * Setter method for username, password, and database name.

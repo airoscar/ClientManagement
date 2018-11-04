@@ -111,7 +111,7 @@ public class InventoryManager {
                 "QUANTITY INT(4) NOT NULL, " +
                 "PRICE DOUBLE(5,2) NOT NULL, " +
                 "SUPPLIERID INT(4) NOT NULL, " +
-                "PRIMARY KEY ( id ))";
+                "PRIMARY KEY ( ID ))";
         try {
             statement = jdbc_connection.prepareStatement(sql);
             statement.executeUpdate(sql);
