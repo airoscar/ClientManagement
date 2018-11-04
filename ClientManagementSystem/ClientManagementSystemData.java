@@ -63,7 +63,7 @@ public class ClientManagementSystemData {
      */
     public void addClient(Client client) throws SQLException {
 
-        client = verifyInput(client);
+        client = verifyInput(client);   //check input for data integrity
         if (client == null) { //invalid input
             return;
         }
@@ -83,14 +83,14 @@ public class ClientManagementSystemData {
     }
 
     /**
-     * Verify the input data, make neccessary changes to format if needed to maintain format consistency. </br>
+     * Verify format of input data, make neccessary changes to format if needed to maintain format consistency. </br>
      * Returns null if the input data does not meet requirement. </br>
      * Returns a re-formatted array of String type ready that meet format requirements.
      *
      * @param client
      * @return
      */
-    private Client verifyInput(Client client) {
+    private Client verifyInput(Client client) { ///////////////// ADD PROMPT: INVALID INPUT///////////////
 
         if (client.getFirstName().length() > 20) {
             return null;
@@ -242,6 +242,7 @@ public class ClientManagementSystemData {
 
     /**
      * Search for a client by looking for a phrase in a specific column.
+     *
      * @param phrase
      * @param column
      * @return
@@ -298,6 +299,32 @@ public class ClientManagementSystemData {
      */
     public void deleteClient(Client client) throws SQLException {
         deleteClient(client.getDataID());
+    }
+
+    /**
+     * Updates a client's info by providing a new client object to overwrite one in the database which shares the same id.
+     * @param client
+     * @throws SQLException
+     */
+    public void updateClient(Client client) throws SQLException {
+        client = verifyInput(client);
+
+        if (client == null){ //if input is invalid
+            return;
+        }
+
+        int id = client.getDataID();
+        String firstname = client.getFirstName();
+        String lastname = client.getLastName();
+        String address = client.getAddress();
+        String postalCod = client.getPostalCode();
+        String phoneNumber = client.getPhoneNumber();
+        String clientType = client.getClientType();
+
+        dbConnection.createStatement().execute(" UPDATE " + dataTableName +
+                " SET firstname = '" + firstname + "', lastname = '" + lastname + "', address = '" + address + "'," +
+                "postalCod = '" + postalCod + "', phoneNumber = '" + phoneNumber + "', clientType = '" + clientType +"' " +
+                "WHERE id = " + id);
     }
 
     /**
@@ -409,16 +436,18 @@ public class ClientManagementSystemData {
 //            myDB.addClient(new Client("Saul", "Goodman", "123 Breaking Boulevard", "S4P 5J5", "400-3731234", "r"));
 //            myDB.addClient(new Client("Bruno", "King", "Kingdom Drive", "A7P5J5", "587633-7878", "R"));
 
-//            //Testing Search method.
+//            ///////Testing Search methods.
 //            ArrayList<Client> list = myDB.defaultSearch("sri");
-            ArrayList<Client> list = myDB.searchColumn("sri", "address");
-
-            Iterator it = list.iterator();
-            while (it.hasNext()) {
-                System.out.println(it.next().toString());
-            }
+//            ArrayList<Client> list = myDB.searchColumn("sri", "address");
+//            Iterator it = list.iterator();
+//            while (it.hasNext()) {
+//                System.out.println(it.next().toString());
+//            }
 
 //            myDB.deleteClient(1);
+
+            myDB.updateClient(new Client(1,"Coooool", "Guy!", "335 New Address Drive", "S0H0A0", "3060000000", "r"));
+
 
         } catch (SQLException e) {
             e.printStackTrace();
