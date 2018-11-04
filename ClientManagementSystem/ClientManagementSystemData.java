@@ -58,13 +58,13 @@ public class ClientManagementSystemData {
     /**
      * Called upon to add a client entry into database.
      *
-     * @param clientData
+     * @param client
      * @throws SQLException
      */
-    public void addClient(String[] clientData) throws SQLException {
+    public void addClient(Client client) throws SQLException {
 
-        String[] verifiedData = verifyInput(clientData);
-        if (verifiedData == null) { //invalid input
+        client = verifyInput(client);
+        if (client == null) { //invalid input
             return;
         }
 
@@ -72,12 +72,12 @@ public class ClientManagementSystemData {
                 " (firstname, lastname, address, postalCod, phoneNumber, clientType)" + " values (?, ?, ?, ?, ?, ?)";
 
         PreparedStatement preparedStmt = dbConnection.prepareStatement(query);
-        preparedStmt.setString(1, verifiedData[0]);
-        preparedStmt.setString(2, verifiedData[1]);
-        preparedStmt.setString(3, verifiedData[2]);
-        preparedStmt.setString(4, verifiedData[3]);
-        preparedStmt.setString(5, verifiedData[4]);
-        preparedStmt.setString(6, verifiedData[5]);
+        preparedStmt.setString(1, client.getFirstName());
+        preparedStmt.setString(2, client.getLastName());
+        preparedStmt.setString(3, client.getAddress());
+        preparedStmt.setString(4, client.getPostalCode());
+        preparedStmt.setString(5, client.getPhoneNumber());
+        preparedStmt.setString(6, client.getClientType());
 
         preparedStmt.execute();
     }
@@ -87,43 +87,37 @@ public class ClientManagementSystemData {
      * Returns null if the input data does not meet requirement. </br>
      * Returns a re-formatted array of String type ready that meet format requirements.
      *
-     * @param clientData
+     * @param client
      * @return
      */
-    private String[] verifyInput(String[] clientData) {
-        String firstName = clientData[0];
-        String lastName = clientData[1];
-        String address = clientData[2];
-        String postalCode = clientData[3];
-        String phoneNumber = clientData[4];
-        String clientType = clientData[5];
+    private Client verifyInput(Client client) {
 
-        if (firstName.length() > 20) {
+        if (client.getFirstName().length() > 20) {
             return null;
         }
-        if (lastName.length() > 20) {
+        if (client.getLastName().length() > 20) {
             return null;
         }
-        if (address.length() > 50) {
+        if (client.getAddress().length() > 50) {
             return null;
         }
-        if (fixPostalFormat(postalCode) == null) {
-            return null;
-        } else {
-            postalCode = fixPostalFormat(postalCode);
-        }
-        if (fixPhoneNumber(phoneNumber) == null) {
+        if (fixPostalFormat(client.getPostalCode()) == null) {
             return null;
         } else {
-            phoneNumber = fixPhoneNumber(phoneNumber);
+            client.setPostalCode(fixPostalFormat(client.getPostalCode()));
         }
-        if (clientType.equalsIgnoreCase("C") || clientType.equalsIgnoreCase("R")) {
-            clientType = clientType.toUpperCase();
+        if (fixPhoneNumber(client.getPhoneNumber()) == null) {
+            return null;
+        } else {
+            client.setPhoneNumber(fixPhoneNumber(client.getPhoneNumber()));
+        }
+        if (client.getClientType().equalsIgnoreCase("C") || client.getClientType().equalsIgnoreCase("R")) {
+            client.setClientType(client.getClientType().toUpperCase());
         } else {
             return null;
         }
 
-        return new String[]{firstName, lastName, address, postalCode, phoneNumber, clientType};
+        return client;
     }
 
     /**
@@ -336,7 +330,7 @@ public class ClientManagementSystemData {
 
         try {
             myDB.initializeDatabase();
-            myDB.addClient(new String[]{"Xool", "Guy", "123LeValley", "S7K3J5", "306373-1234", "c"});
+            myDB.addClient(new Client("Cool", "Guy", "123 Srilankadabada Drive", "A7K5J5", "3063731234", "C"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
