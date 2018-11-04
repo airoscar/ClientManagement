@@ -1,3 +1,8 @@
+// ENSF 519-2 Java Project I
+// Client Management System
+// Oscar Chen & Savith Jayasekera
+// November 5 2018
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
