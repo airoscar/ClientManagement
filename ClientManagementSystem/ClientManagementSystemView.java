@@ -158,6 +158,7 @@ public class ClientManagementSystemView extends JFrame {
         clientInformationSectionCenterPanel.setLayout(new GridLayout(7,2,-10,45));
 
         clientInformationSectionCenterPanel.add(new JLabel("Client ID:"));
+        clientIDTextField.setEditable(false);
         clientInformationSectionCenterPanel.add(clientIDTextField);
         clientInformationSectionCenterPanel.add(new JLabel("First Name:"));
         clientInformationSectionCenterPanel.add(firstNameTextField);
