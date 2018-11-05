@@ -65,6 +65,7 @@ public class ClientManagementSystemView extends JFrame {
 
     /**
      * Set up north panel.
+     *
      * @return
      */
     private JPanel northPanel() {
@@ -79,6 +80,7 @@ public class ClientManagementSystemView extends JFrame {
 
     /**
      * Set up center panel.
+     *
      * @return
      */
     private JPanel centerPanel() {
@@ -202,6 +204,7 @@ public class ClientManagementSystemView extends JFrame {
 
     /**
      * Set up listeners for buttons and list.
+     *
      * @param searchResultsListListener
      * @param searchButtonListener
      * @param clearSearchButtonListener
@@ -225,7 +228,7 @@ public class ClientManagementSystemView extends JFrame {
      * Clear search result.
      */
     public void clearSearchResults() {
-        searchResults.removeAllElements();
+        searchResults.clear();
     }
 
     /**
@@ -242,10 +245,12 @@ public class ClientManagementSystemView extends JFrame {
 
     /**
      * Get value of selected list item.
+     *
      * @return
      */
     public String getSelectedSearchResult() {
         return searchResultList.getSelectedValue();
+
     }
 
     public String getSearchBoxTextFieldText() {
@@ -336,9 +341,10 @@ public class ClientManagementSystemView extends JFrame {
 
     /**
      * Update value of text fields from a array of String types.
+     *
      * @param texts
      */
-    public void updateTextFields (String[] texts){
+    public void updateTextFields(String[] texts) {
         clientIDTextField.setText(texts[0].trim());
         firstNameTextField.setText(texts[1].trim());
         lastNameTextField.setText(texts[2].trim());

@@ -83,10 +83,14 @@ public class ClientManagementSystemController {
         searchButtonPressed();
     }
 
-    private void listClicked() throws Exception {
-        String selectedItem = view.getSelectedSearchResult();
-        String[] details = selectedItem.split(",");
-        view.updateTextFields(details);
+    private void listClicked() {
+        if (view.getSelectedSearchResult() == null) {
+            view.clearClientInformation();
+        } else {
+            String selectedItem = view.getSelectedSearchResult();
+            String[] details = selectedItem.split(",");
+            view.updateTextFields(details);
+        }
     }
 
     /**
@@ -106,7 +110,12 @@ public class ClientManagementSystemController {
             }
         };
 
-        ActionListener clearSearchButtonListener = e -> view.clearSearchResults();  //set up listener for Search Clear button
+        ActionListener clearSearchButtonListener = new ActionListener() {   //set up listener for Search Clear button
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                view.clearSearchResults();
+            }
+        };
 
         ActionListener saveButtonListener = new ActionListener() {
             @Override
@@ -141,11 +150,7 @@ public class ClientManagementSystemController {
         ListSelectionListener listListener = new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                try {
-                    listClicked();
-                }catch (Exception error) {
-                    JOptionPane.showMessageDialog(null, error.getMessage());
-                }
+                listClicked();
             }
         };
 
