@@ -8,29 +8,43 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.util.ArrayList;
 
+/**
+ * Controller that delegates between View and Data. </br>
+ * Sets up View and Data.
+ */
 public class ClientManagementSystemController {
 
     private ClientManagementSystemData dataModel;
     private ClientManagementSystemView view;
 
-    ClientManagementSystemController() {
+    ClientManagementSystemController() throws ClientDataBaseStartUpException {
         dataModel = new ClientManagementSystemData();
         view = new ClientManagementSystemView();
-        setUpData();
-        setUpView();
+        if (setUpData() == 0) { //failed to set up database
+            throw new ClientDataBaseStartUpException();
+        } else {
+            setUpView();
+            readDataFromFile();
+        }
     }
 
+    /**
+     * Called upon when the search button is pressed.
+     *
+     * @throws Exception
+     */
     private void searchButtonPressed() throws Exception {
         view.clearSearchResults();
         String phrase = view.getSearchBoxTextFieldText();   //phrase to search for
         String column = "";     //the column in which to search for the phrase
         ArrayList<Client> searchResults;
 
-        int selectedButton = view.getSelectedSearchButton();
+        int selectedButton = view.getSelectedSearchButton();//Read radio button selection
 
-        if (selectedButton == 0) {
+        if (selectedButton == 0) {  //generate 'column' attribute based on radio button selection
             JOptionPane.showMessageDialog(null, "Please make a selection before clicking the search button");
             return;
         } else if (selectedButton == 1) {
@@ -165,13 +179,30 @@ public class ClientManagementSystemController {
     /**
      * Set up data model
      */
-    private void setUpData() {
+    private int setUpData() {
         try {
             String username = JOptionPane.showInputDialog("Please enter username: ");
             String password = JOptionPane.showInputDialog("Please enter password: ");
             String database = JOptionPane.showInputDialog("Please enter name of the database: ", "clientsDB");
             dataModel.setUpDatabase(username, password, database);
             dataModel.initializeDatabase();
+            return 1;   //return 1 if database is set up
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            return 0;   //return 0 if exception encountered during data set up.
+        }
+    }
+
+    /**
+     * Prompt user to upload data from text file to database.
+     */
+    private void readDataFromFile() {
+        BufferedReader reader = new LoadDataFromFile().getBufferedReader();
+        if (reader == null) {
+            return;
+        }
+        try {
+            dataModel.uploadFileToDatabase(reader);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
