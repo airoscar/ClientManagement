@@ -6,6 +6,7 @@
 import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 /**
@@ -32,16 +33,15 @@ public class LoadDataFromFile {
             return null;
         }
 
-        File file = new File(JOptionPane.showInputDialog(null, "Enter the file name:",
-                "clients.txt"));
-
         try {
-
+            File file = new File(JOptionPane.showInputDialog(null, "Enter the file name:",
+                    "clients.txt"));
             BufferedReader reader = new BufferedReader(new FileReader(file.getPath()));
             return reader;
-
+        } catch (FileNotFoundException error) {
+            JOptionPane.showMessageDialog(null, "File not found.");
         } catch (Exception error) {
-            JOptionPane.showMessageDialog(null, "Failed to load data from file.");
+            //JOptionPane.showMessageDialog(null, "Failed to load data from file.");
         }
 
         return null;

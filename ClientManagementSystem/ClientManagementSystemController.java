@@ -202,8 +202,8 @@ public class ClientManagementSystemController {
                     dataModel.initializeDatabase();
                     setUpView();
                     readDataFromFile();
-                } catch (Exception e2) {
-                    JOptionPane.showMessageDialog(null, e2.getMessage());
+                } catch (Exception error) {
+                    JOptionPane.showMessageDialog(null, error.getMessage());
                 }
                 loginWindow.setVisible(false);
                 loginWindow.dispose();
