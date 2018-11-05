@@ -8,7 +8,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 /**
@@ -305,10 +304,6 @@ public class ClientManagementSystemView extends JFrame {
 
     public String getClientType() {
         return (String) clientTypeSpinner.getValue();
-    }
-
-    public static void main(String[] args) {
-        new ClientManagementSystemView().setVisible(true);
     }
 
     public void setClientIDText(String text) {

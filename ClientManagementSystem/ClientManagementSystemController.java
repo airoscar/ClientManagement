@@ -77,7 +77,7 @@ public class ClientManagementSystemController {
         if (clientID.equalsIgnoreCase("")) {
             return;
         } else {
-            dataModel.deleteClient(Integer.parseInt(clientID));
+            dataModel.deleteClient(clientID);
         }
         view.clearClientInformation();
         searchButtonPressed();
@@ -162,7 +162,7 @@ public class ClientManagementSystemController {
         try {
             String username = JOptionPane.showInputDialog("Please enter username: ");
             String password = JOptionPane.showInputDialog("Please enter password: ");
-            String database = JOptionPane.showInputDialog("Please enter name of the database: ", "client_db");
+            String database = JOptionPane.showInputDialog("Please enter name of the database: ", "clientsDB");
             dataModel.setUpDatabase(username, password, database);
             dataModel.initializeDatabase();
         } catch (Exception e) {

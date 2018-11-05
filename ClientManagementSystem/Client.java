@@ -8,7 +8,7 @@
  */
 public class Client {
 
-    private int dataID;
+    private String dataID;
     private String firstName;
     private String lastName;
     private String address;
@@ -27,7 +27,7 @@ public class Client {
      * Constructor that takes dataID attribute.
      * @param dataID
      */
-    public Client(int dataID) {
+    public Client(String dataID) {
         this.dataID = dataID;
     }
 
@@ -41,7 +41,7 @@ public class Client {
      * @param phoneNumber
      * @param clientType
      */
-    public Client(int dataID, String firstName, String lastName,
+    public Client(String dataID, String firstName, String lastName,
                   String address, String postalCode, String phoneNumber, String clientType) {
         this(firstName, lastName, address, postalCode, phoneNumber, clientType);
         this.dataID = dataID;
@@ -66,7 +66,7 @@ public class Client {
         this.clientType = clientType;
     }
 
-    public int getDataID() {
+    public String getDataID() {
         return this.dataID;
     }
 
@@ -95,7 +95,7 @@ public class Client {
     }
 
     public void setDataID(String dataID) {
-        this.dataID = Integer.parseInt(dataID);
+        this.dataID = dataID;
     }
 
     public void setFirstName(String firstName) {

@@ -219,27 +219,6 @@ public class ClientManagementSystemData {
     }
 
     /**
-     * Search for a phrase in all of the columns. </br>
-     * This method utilizes MySQL's Natural Language Full-Text Search, </br>
-     * which requires the database to be set up using InnoDB engine. </br>
-     * Returns an ArrayList of objects of type Client.
-     *
-     * @param searchPhrase
-     * @return
-     * @throws SQLException
-     */
-    public ArrayList<Client> defaultSearch(String searchPhrase) throws SQLException {
-
-        String query = "SELECT * FROM " + dataTableName +
-                " WHERE MATCH(firstname, lastname, address, postalCod, phoneNumber)" +
-                " AGAINST ('" + searchPhrase + "' IN NATURAL LANGUAGE MODE);";
-
-        ResultSet result = dbConnection.createStatement().executeQuery(query);
-
-        return parseResultSetToList(result);
-    }
-
-    /**
      * Search for a client by looking for a phrase in a specific column.
      *
      * @param phrase
@@ -286,7 +265,7 @@ public class ClientManagementSystemData {
      * @param id
      * @throws SQLException
      */
-    public void deleteClient(int id) throws SQLException {
+    public void deleteClient(String id) throws SQLException {
         dbConnection.createStatement().execute(" DELETE from " + dataTableName + " WHERE id = " + id);
     }
 
@@ -312,7 +291,7 @@ public class ClientManagementSystemData {
             return;
         }
 
-        int id = client.getDataID();
+        String id = client.getDataID();
         String firstname = client.getFirstName();
         String lastname = client.getLastName();
         String address = client.getAddress();
@@ -444,38 +423,6 @@ public class ClientManagementSystemData {
             client.setPhoneNumber(details[4]);
             client.setClientType(details[5]);
             addClient(client);
-        }
-    }
-
-    //code testing
-    public static void main(String[] args) {
-        ClientManagementSystemData myDB = new ClientManagementSystemData();
-        myDB.setUpDatabase("root", "greencreatures", "clientsDB");
-
-        try {
-            myDB.initializeDatabase();
-//            myDB.addClient(new Client("Co", "Guy", "123 Sri lankadabada Drive", "A7K5J5", "3063731234", "C"));
-//            myDB.addClient(new Client("Mot", "Teres", "34 Sri Drive", "A7K 5J5", "306-373-3065", "c"));
-//            myDB.addClient(new Client("Saul", "Goodman", "123 Breaking Boulevard", "S4P 5J5", "400-3731234", "r"));
-//            myDB.addClient(new Client("Bruno", "King", "Kingdom Drive", "A7P5J5", "587633-7878", "R"));
-
-//            ///////Testing Search methods.
-//            ArrayList<Client> list = myDB.defaultSearch("sri");
-//            ArrayList<Client> list = myDB.searchColumn("sri", "address");
-//            Iterator it = list.iterator();
-//            while (it.hasNext()) {
-//                System.out.println(it.next().toString());
-//            }
-
-//            myDB.updateClient(new Client(1,"Coo123456789123456789oool", "Guy!", "335 New Address Drive", "S0H0A0", "3060000000", "r"));
-
-//            ///////Testing uploader/////////
-//            File file = new File("clients.txt");
-//            BufferedReader reader = new BufferedReader(new FileReader(file.getPath()));
-//            myDB.uploadFileToDatabase(reader);
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }
