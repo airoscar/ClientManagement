@@ -84,11 +84,11 @@ public class ClientManagementSystemController {
     }
 
     private void listClicked() {
-        if (view.getSelectedSearchResult() == null) {
+        String selection = view.getSelectedSearchResult();
+        if (selection == null) {
             view.clearClientInformation();
         } else {
-            String selectedItem = view.getSelectedSearchResult();
-            String[] details = selectedItem.split(",");
+            String[] details = selection.split(",");
             view.updateTextFields(details);
         }
     }
@@ -150,7 +150,9 @@ public class ClientManagementSystemController {
         ListSelectionListener listListener = new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                listClicked();
+                if (!e.getValueIsAdjusting()) {
+                    listClicked();
+                }
             }
         };
 

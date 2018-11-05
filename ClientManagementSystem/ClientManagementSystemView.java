@@ -250,7 +250,6 @@ public class ClientManagementSystemView extends JFrame {
      */
     public String getSelectedSearchResult() {
         return searchResultList.getSelectedValue();
-
     }
 
     public String getSearchBoxTextFieldText() {
