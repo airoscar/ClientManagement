@@ -3,13 +3,15 @@
 // Oscar Chen & Savith Jayasekera
 // November 5 2018
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.io.File;
 
 
 public class ClientManagementSystemData {
@@ -61,7 +63,7 @@ public class ClientManagementSystemData {
      * @param client
      * @throws SQLException
      */
-    public void addClient(Client client) throws SQLException {
+    public void addClient(Client client) throws Exception {
 
         client = verifyInput(client);   //check input for data integrity
         if (client == null) { //invalid input
@@ -83,38 +85,38 @@ public class ClientManagementSystemData {
     }
 
     /**
-     * Verify format of input data, make neccessary changes to format if needed to maintain format consistency. </br>
+     * Verify format of input data, make necessary changes to format if needed to maintain format consistency. </br>
      * Returns null if the input data does not meet requirement. </br>
      * Returns a re-formatted array of String type ready that meet format requirements.
      *
      * @param client
      * @return
      */
-    private Client verifyInput(Client client) { ///////////////// ADD PROMPT: INVALID INPUT///////////////
+    private Client verifyInput(Client client) throws Exception {
 
         if (client.getFirstName().length() > 20) {
-            return null;
+            throw new ClientDataInputException();
         }
         if (client.getLastName().length() > 20) {
-            return null;
+            throw new ClientDataInputException();
         }
         if (client.getAddress().length() > 50) {
-            return null;
+            throw new ClientDataInputException();
         }
         if (fixPostalFormat(client.getPostalCode()) == null) {
-            return null;
+            throw new ClientPostalException();
         } else {
             client.setPostalCode(fixPostalFormat(client.getPostalCode()));
         }
         if (fixPhoneNumber(client.getPhoneNumber()) == null) {
-            return null;
+            throw new ClientPhoneNumberException();
         } else {
             client.setPhoneNumber(fixPhoneNumber(client.getPhoneNumber()));
         }
         if (client.getClientType().equalsIgnoreCase("C") || client.getClientType().equalsIgnoreCase("R")) {
             client.setClientType(client.getClientType().toUpperCase());
         } else {
-            return null;
+            throw new ClientTypeException();
         }
 
         return client;
@@ -306,7 +308,7 @@ public class ClientManagementSystemData {
      * @param client
      * @throws SQLException
      */
-    public void updateClient(Client client) throws SQLException {
+    public void updateClient(Client client) throws Exception {
         client = verifyInput(client);
 
         if (client == null){ //if input is invalid
@@ -423,6 +425,32 @@ public class ClientManagementSystemData {
         return dbExist;
     }
 
+    /**
+     * Receives an input of type BufferedReader. </br>
+     * Upload a txt file of client data to database. </br>
+     * The file must be structured such that each line represent a client. </br>
+     * The client's information must be separated by a semi-colon as such: </br>
+     * first name; last name; address; postal code; phone number; client type </br>
+     * See example txt file.
+     */
+    public void uploadFileToDatabase(BufferedReader reader) throws Exception {
+
+        String line;
+        while ((line = reader.readLine()) != null) {
+            System.out.println(line);
+            String [] details = line.split(";");
+            Client client = new Client();
+            client.setFirstName(details[0]);
+            client.setLastName(details[1]);
+            client.setAddress(details[2]);
+            client.setPostalCode(details[3]);
+            client.setPhoneNumber(details[4]);
+            client.setClientType(details[5]);
+            addClient(client);
+        }
+
+    }
+
 
     //code testing
     public static void main(String[] args) {
@@ -444,12 +472,14 @@ public class ClientManagementSystemData {
 //                System.out.println(it.next().toString());
 //            }
 
-//            myDB.deleteClient(1);
+//            myDB.updateClient(new Client(1,"Coo123456789123456789oool", "Guy!", "335 New Address Drive", "S0H0A0", "3060000000", "r"));
 
-            myDB.updateClient(new Client(1,"Coooool", "Guy!", "335 New Address Drive", "S0H0A0", "3060000000", "r"));
+//            ///////Testing uploader/////////
+//            File file = new File("clients.txt");
+//            BufferedReader reader = new BufferedReader(new FileReader(file.getPath()));
+//            myDB.uploadFileToDatabase(reader);
 
-
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

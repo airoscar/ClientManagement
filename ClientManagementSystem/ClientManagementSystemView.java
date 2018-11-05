@@ -192,8 +192,6 @@ public class ClientManagementSystemView extends JFrame {
 
     }
 
-
-
     public static void main(String[] args) {
         new ClientManagementSystemView().setVisible(true);
     }
