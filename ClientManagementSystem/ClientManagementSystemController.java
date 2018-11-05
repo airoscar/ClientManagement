@@ -44,17 +44,21 @@ public class ClientManagementSystemController {
 
     }
 
+    /**
+     * Sets up the UI View.</br>
+     * Creates various listeners for the View.
+     */
     private void setUpView() {
 
-        ActionListener searchButtonListener = new ActionListener() {
+        ActionListener searchButtonListener = new ActionListener() {    //set up listener for Search button
             @Override
             public void actionPerformed(ActionEvent e) {
                 view.clearSearchResults();
-                String phrase = view.getSearchBoxTextFieldText();
-                String column = "";
+                String phrase = view.getSearchBoxTextFieldText();   //phrase to search for
+                String column = "";     //the column in which to search for the phrase
+                ArrayList<Client> searchResults;
 
                 int selectedButton = view.getSelectedSearchButton();
-
 
                 if (selectedButton == 0) {
                     JOptionPane.showMessageDialog(null, "Please make a selection before clicking the search button");
@@ -67,9 +71,6 @@ public class ClientManagementSystemController {
                     column = "clientType";
                 }
 
-
-                ArrayList<Client> searchResults;
-
                 try {
                     searchResults = dataModel.searchColumn(phrase, column);
 
@@ -79,19 +80,14 @@ public class ClientManagementSystemController {
                 }
 
                 view.setSearchResults(searchResults);
-
             }
         };
 
-        ActionListener clearSearchButtonListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                view.clearSearchResults();
-            }
-        };
+        ActionListener clearSearchButtonListener = e -> view.clearSearchResults();  //set up listener for Search Clear button
 
 
-        view.setListeners(searchButtonListener, clearSearchButtonListener);
+
+        view.setUpActionListeners(searchButtonListener, clearSearchButtonListener);
 
         //TODO: Complete after JList display is configured
         /*MouseListener searchResultsListener = new MouseListener() {

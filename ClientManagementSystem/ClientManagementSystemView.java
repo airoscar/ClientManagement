@@ -196,7 +196,7 @@ public class ClientManagementSystemView extends JFrame {
 
     }
 
-    /*public void setUpActionListeners(MouseListener searchResultsListListener, ActionListener clientIDSearchButtonListener,
+    public void setUpActionListeners(MouseListener searchResultsListListener, ActionListener clientIDSearchButtonListener,
                                      ActionListener lastNameSearchButtonListener, ActionListener clientTypeSearchButtonListener,
                                      ActionListener searchBoxTextFieldListener, ActionListener searchButtonListener, ActionListener clearSearchButtonListener,
                                      ActionListener saveButtonListener, ActionListener deleteButtonListener, ActionListener clearButtonListener){
@@ -211,13 +211,9 @@ public class ClientManagementSystemView extends JFrame {
         saveButton.addActionListener(saveButtonListener);
         deleteButton.addActionListener(deleteButtonListener);
         clearButton.addActionListener(clearButtonListener);
-    }*/
-
-    //TODO: TEST METHOD; DELETE AFTER TESTING
-    public void setListeners(ActionListener test, ActionListener test2){
-        searchButton.addActionListener(test);
-        clearSearchButton.addActionListener(test2);
     }
+
+
 
     public void clearSearchResults(){
         searchResults.removeAllElements();
