@@ -14,12 +14,13 @@ public class ClientManagementSystemController {
 
     private ClientManagementSystemData dataModel;
     private ClientManagementSystemView view;
+    private ClientManagementSystemDBLogin loginWindow;
 
     ClientManagementSystemController() {
         dataModel = new ClientManagementSystemData();
         view = new ClientManagementSystemView();
+        loginWindow = new ClientManagementSystemDBLogin();
         setUpData();
-        setUpView();
     }
 
     private void searchButtonPressed() throws Exception {
@@ -162,18 +163,39 @@ public class ClientManagementSystemController {
         view.setVisible(true);
     }
 
+
+
+
     /**
      * Set up data model
      */
     private void setUpData() {
-        try {
-            String username = JOptionPane.showInputDialog("Please enter username: ");
-            String password = JOptionPane.showInputDialog("Please enter password: ");
-            String database = JOptionPane.showInputDialog("Please enter name of the database: ", "clientsDB");
-            dataModel.setUpDatabase(username, password, database);
-            dataModel.initializeDatabase();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
+
+        ActionListener okButtonListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dataModel.setUpDatabase(loginWindow.getUsername(), loginWindow.getPassword(), loginWindow.getDBName());
+                try {
+                    dataModel.initializeDatabase();
+                    setUpView();
+                } catch (Exception e2) {
+                    JOptionPane.showMessageDialog(null, e2.getMessage());
+                }
+            }
+        };
+
+        ActionListener canButtonListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loginWindow.setVisible(false);
+                loginWindow.dispose();
+            }
+        };
+
+
+        loginWindow.setActionListeners(okButtonListener, canButtonListener);
+
+        loginWindow.setVisible(true);
+
     }
 }
