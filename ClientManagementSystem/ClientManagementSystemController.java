@@ -125,6 +125,7 @@ public class ClientManagementSystemController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 view.clearSearchResults();
+                view.clearSearchBox();
             }
         };
 

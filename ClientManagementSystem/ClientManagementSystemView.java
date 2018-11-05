@@ -225,6 +225,13 @@ public class ClientManagementSystemView extends JFrame {
     }
 
     /**
+     * Clear the search parameter box
+     */
+    public void clearSearchBox (){
+        searchBoxTextField.setText("");
+    }
+
+    /**
      * Clear search result.
      */
     public void clearSearchResults() {
