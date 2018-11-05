@@ -132,7 +132,7 @@ public class ClientManagementSystemData {
      * @return
      */
     private String fixPostalFormat(String postal) {
-        String regex = "^[A-Z][0-9][A-Z]\\s?[0-9][A-Z][0-9]$";
+        String regex = "^[A-Z,a-z][0-9][A-Z,a-z]\\s?[0-9][A-Z,a-z][0-9]$";
         Pattern pattern = Pattern.compile(regex);
 
         Matcher matcher = pattern.matcher(postal);
@@ -144,6 +144,8 @@ public class ClientManagementSystemData {
         if (postal.length() == 6) {  //if no space in the middle, add space
             postal = postal.substring(0, 3) + " " + postal.substring(3, 6);
         }
+
+        postal = postal.toUpperCase();
 
         return postal;  //return verified postal code
     }
