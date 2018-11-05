@@ -19,16 +19,13 @@ public class ClientManagementSystemController {
 
     private ClientManagementSystemData dataModel;
     private ClientManagementSystemView view;
+    private ClientManagementSystemDBLogin loginWindow;
 
-    ClientManagementSystemController() throws ClientDataBaseStartUpException {
+    ClientManagementSystemController() {
         dataModel = new ClientManagementSystemData();
         view = new ClientManagementSystemView();
-        if (setUpData() == 0) { //failed to set up database
-            throw new ClientDataBaseStartUpException();
-        } else {
-            setUpView();
-            readDataFromFile();
-        }
+        loginWindow = new ClientManagementSystemDBLogin();
+        setUp();
     }
 
     /**
@@ -177,23 +174,6 @@ public class ClientManagementSystemController {
     }
 
     /**
-     * Set up data model
-     */
-    private int setUpData() {
-        try {
-            String username = JOptionPane.showInputDialog("Please enter username: ");
-            String password = JOptionPane.showInputDialog("Please enter password: ");
-            String database = JOptionPane.showInputDialog("Please enter name of the database: ", "clientsDB");
-            dataModel.setUpDatabase(username, password, database);
-            dataModel.initializeDatabase();
-            return 1;   //return 1 if database is set up
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-            return 0;   //return 0 if exception encountered during data set up.
-        }
-    }
-
-    /**
      * Prompt user to upload data from text file to database.
      */
     private void readDataFromFile() {
@@ -206,5 +186,36 @@ public class ClientManagementSystemController {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
+    }
+
+    /**
+     * Set up database log in. Initialize database. start View.
+     */
+    private void setUp() {
+
+        ActionListener okButtonListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dataModel.setUpDatabase(loginWindow.getUsername(), loginWindow.getPassword(), loginWindow.getDBName());
+                try {
+                    dataModel.initializeDatabase();
+                    setUpView();
+                    readDataFromFile();
+                } catch (Exception e2) {
+                    JOptionPane.showMessageDialog(null, e2.getMessage());
+                }
+            }
+        };
+
+        ActionListener canButtonListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loginWindow.setVisible(false);
+                loginWindow.dispose();
+            }
+        };
+
+        loginWindow.setActionListeners(okButtonListener, canButtonListener);
+        loginWindow.setVisible(true);
     }
 }
