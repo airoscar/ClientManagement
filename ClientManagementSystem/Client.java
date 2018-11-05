@@ -123,8 +123,8 @@ public class Client {
     }
 
     public String toString() {
-        return this.dataID + " " + this.firstName + " " + this.lastName + " " + this.address + " " + this.postalCode
-                + " " + this.phoneNumber + " " + clientType;
+        return this.dataID + ", " + this.firstName + ", " + this.lastName + ", " + this.address + ", " + this.postalCode
+                + ", " + this.phoneNumber + ", " + clientType;
     }
 
 }

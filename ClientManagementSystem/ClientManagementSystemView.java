@@ -23,17 +23,17 @@ public class ClientManagementSystemView extends JFrame {
     private JRadioButton lastNameSearchButton = new JRadioButton("Last Name");
     private JRadioButton clientTypeSearchButton = new JRadioButton("Client Type");
 
-    private JTextField searchBoxTextField = new JTextField(15);
+    private JTextField searchBoxTextField = new JTextField(24);
     private JButton searchButton = new JButton("Search");
     private JButton clearSearchButton = new JButton("Clear Search");
 
-    private JTextField clientIDTextField = new JTextField();
-    private JTextField firstNameTextField = new JTextField();
-    private JTextField lastNameTextField = new JTextField();
-    private JTextField addressTextField = new JTextField();
-    private JTextField postalCodeTextField = new JTextField();
-    private JTextField phoneNumberTextField = new JTextField();
-    private JSpinner clientTypeSpinner = new JSpinner();
+    private JTextField clientIDTextField = new JTextField("");
+    private JTextField firstNameTextField = new JTextField("");
+    private JTextField lastNameTextField = new JTextField("");
+    private JTextField addressTextField = new JTextField("");
+    private JTextField postalCodeTextField = new JTextField("");
+    private JTextField phoneNumberTextField = new JTextField("");
+    private JSpinner clientTypeSpinner = new JSpinner(new SpinnerListModel(new String[]{"R", "C"}));
 
     private JButton saveButton = new JButton("Save");
     private JButton deleteButton = new JButton("Delete");
@@ -43,8 +43,8 @@ public class ClientManagementSystemView extends JFrame {
     /**
      * Creates the main window of the user interface
      */
-    public ClientManagementSystemView(){
-        setSize(900,750);
+    public ClientManagementSystemView() {
+        setSize(1200, 750);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //opens the window centered at the middle of the screen
         setLocationRelativeTo(null);
@@ -53,7 +53,7 @@ public class ClientManagementSystemView extends JFrame {
         setResizable(false);
     }
 
-    private void addPanelsToView(){
+    private void addPanelsToView() {
 
         JPanel northPanel = northPanel();
         JPanel centerPanel = centerPanel();
@@ -63,7 +63,7 @@ public class ClientManagementSystemView extends JFrame {
         add(BorderLayout.CENTER, centerPanel);
     }
 
-    private JPanel northPanel(){
+    private JPanel northPanel() {
         JPanel northPanel = new JPanel();
         northPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         JLabel screenTitle = new JLabel("Client Management Screen", SwingConstants.CENTER);
@@ -75,30 +75,30 @@ public class ClientManagementSystemView extends JFrame {
     }
 
 
-    private JPanel centerPanel(){
+    private JPanel centerPanel() {
 
         //This panel is the main panel with two sections split vertically: Search Client section on the left
         //and the Client Information section on the right
         JPanel centerPanel = new JPanel();
-        centerPanel.setLayout(new GridLayout(1,2));
+        centerPanel.setLayout(new GridLayout(1, 2));
 
         //This panel is the Search Client section. It is split horizontally into: Search Selection on top and
         //Search Results on the bottom
         JPanel searchSection = new JPanel();
         searchSection.setBorder(BorderFactory.createLineBorder(Color.black));
-        searchSection.setLayout(new GridLayout(2,1));
+        searchSection.setLayout(new GridLayout(2, 1));
 
         //Creates the Search Selection Panel
         JPanel searchSelection = new JPanel();
 
         searchSelection.setBorder(BorderFactory.createLineBorder(Color.black));
-        searchSelection.setLayout(new BorderLayout(0,50));
+        searchSelection.setLayout(new BorderLayout(0, 50));
 
-        searchSelection.add(new JLabel("Search Clients",SwingConstants.CENTER), BorderLayout.NORTH);
+        searchSelection.add(new JLabel("Search Clients", SwingConstants.CENTER), BorderLayout.NORTH);
 
         JPanel searchSelectionCenterPanel = new JPanel();
-        searchSelectionCenterPanel.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
-        searchSelectionCenterPanel.setLayout(new BorderLayout(0,10));
+        searchSelectionCenterPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+        searchSelectionCenterPanel.setLayout(new BorderLayout(0, 10));
 
         JLabel searchSelectionExplanation = new JLabel("Select type of search to be performed:");
         searchSelectionExplanation.setFont(new Font("SANS_SERIF", Font.PLAIN, 12));
@@ -122,8 +122,8 @@ public class ClientManagementSystemView extends JFrame {
         searchSelectionCenterPanel.add(searchSelectionCenterPanelButtons, BorderLayout.CENTER);
 
         JPanel searchSelectionSouthPanel = new JPanel();
-        searchSelectionSouthPanel.setBorder(BorderFactory.createEmptyBorder(0,10,40,10));
-        searchSelectionSouthPanel.setLayout(new BorderLayout(10,30));
+        searchSelectionSouthPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 40, 10));
+        searchSelectionSouthPanel.setLayout(new BorderLayout(10, 30));
 
         JLabel searchParameterExplanation = new JLabel("Enter the search parameter below:");
         searchParameterExplanation.setFont(new Font("SANS_SERIF", Font.PLAIN, 12));
@@ -140,12 +140,12 @@ public class ClientManagementSystemView extends JFrame {
         //Creates the Search Results Panel
         JPanel searchResultsPanel = new JPanel();
         searchResultsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        searchResultsPanel.setLayout(new BorderLayout(0,10));
+        searchResultsPanel.setLayout(new BorderLayout(0, 10));
 //        JList searchResultList = new JList(searchResults);
         JLabel searchResultsPanelLabel = new JLabel("Search Results", SwingConstants.CENTER);
-        searchResultsPanel.add(searchResultsPanelLabel,BorderLayout.NORTH);
+        searchResultsPanel.add(searchResultsPanelLabel, BorderLayout.NORTH);
         searchResultsPanel.add(searchResultList, BorderLayout.CENTER);
-        searchResultsPanel.add(new JScrollPane(searchResultList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER));
+        searchResultsPanel.add(new JScrollPane(searchResultList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER));
 
         searchSection.add(searchSelection);
         searchSection.add(searchResultsPanel);
@@ -153,13 +153,13 @@ public class ClientManagementSystemView extends JFrame {
         //Creates the Client Information section
         JPanel clientInformationSection = new JPanel();
         clientInformationSection.setBorder(BorderFactory.createLineBorder(Color.black));
-        clientInformationSection.setLayout(new BorderLayout(0,30));
+        clientInformationSection.setLayout(new BorderLayout(0, 30));
         JLabel clientInformationSectionLabel = new JLabel("Client Information", SwingConstants.CENTER);
         clientInformationSection.add(clientInformationSectionLabel, BorderLayout.NORTH);
 
         JPanel clientInformationSectionCenterPanel = new JPanel();
-        clientInformationSectionCenterPanel.setBorder(new EmptyBorder(40,90,40,90));
-        clientInformationSectionCenterPanel.setLayout(new GridLayout(7,2,-10,45));
+        clientInformationSectionCenterPanel.setBorder(new EmptyBorder(40, 90, 40, 90));
+        clientInformationSectionCenterPanel.setLayout(new GridLayout(7, 2, -10, 45));
 
         clientInformationSectionCenterPanel.add(new JLabel("Client ID:"));
         clientIDTextField.setEditable(false);
@@ -180,8 +180,8 @@ public class ClientManagementSystemView extends JFrame {
         clientInformationSection.add(clientInformationSectionCenterPanel, BorderLayout.CENTER);
 
         JPanel clientInformationSectionSouthPanel = new JPanel();
-        clientInformationSectionSouthPanel.setLayout(new GridLayout(1,3,30,0));
-        clientInformationSectionSouthPanel.setBorder(new EmptyBorder(0,50,40,50));
+        clientInformationSectionSouthPanel.setLayout(new GridLayout(1, 3, 30, 0));
+        clientInformationSectionSouthPanel.setBorder(new EmptyBorder(0, 50, 40, 50));
         clientInformationSectionSouthPanel.add(saveButton);
         clientInformationSectionSouthPanel.add(deleteButton);
         clientInformationSectionSouthPanel.add(clearButton);
@@ -196,16 +196,11 @@ public class ClientManagementSystemView extends JFrame {
 
     }
 
-    public void setUpActionListeners(MouseListener searchResultsListListener, ActionListener clientIDSearchButtonListener,
-                                     ActionListener lastNameSearchButtonListener, ActionListener clientTypeSearchButtonListener,
-                                     ActionListener searchBoxTextFieldListener, ActionListener searchButtonListener, ActionListener clearSearchButtonListener,
-                                     ActionListener saveButtonListener, ActionListener deleteButtonListener, ActionListener clearButtonListener){
+    public void setUpActionListeners(MouseListener searchResultsListListener, ActionListener searchButtonListener,
+                                     ActionListener clearSearchButtonListener, ActionListener saveButtonListener,
+                                     ActionListener deleteButtonListener, ActionListener clearButtonListener) {
 
         searchResultList.addMouseListener(searchResultsListListener);
-        clientIDSearchButton.addActionListener(clientIDSearchButtonListener);
-        lastNameSearchButton.addActionListener(lastNameSearchButtonListener);
-        clientTypeSearchButton.addActionListener(clientTypeSearchButtonListener);
-        searchBoxTextField.addActionListener(searchBoxTextFieldListener);
         searchButton.addActionListener(searchButtonListener);
         clearSearchButton.addActionListener(clearSearchButtonListener);
         saveButton.addActionListener(saveButtonListener);
@@ -214,12 +209,11 @@ public class ClientManagementSystemView extends JFrame {
     }
 
 
-
-    public void clearSearchResults(){
+    public void clearSearchResults() {
         searchResults.removeAllElements();
     }
 
-    public void clearClientInformation(){
+    public void clearClientInformation() {
         clientIDTextField.setText("");
         firstNameTextField.setText("");
         lastNameTextField.setText("");
@@ -229,11 +223,11 @@ public class ClientManagementSystemView extends JFrame {
 
     }
 
-    public String getSelectedSearchResult(){
+    public String getSelectedSearchResult() {
         return searchResultList.getSelectedValue();
     }
 
-    public String getSearchBoxTextFieldText(){
+    public String getSearchBoxTextFieldText() {
         return searchBoxTextField.getText();
     }
 
@@ -242,25 +236,95 @@ public class ClientManagementSystemView extends JFrame {
     }
 
     public void setSearchResults(ArrayList<Client> searchResults) {
-        for(Client result : searchResults){
+        for (Client result : searchResults) {
             this.searchResults.addElement(result.toString());
         }
     }
-    public int getSelectedSearchButton(){
-        if (clientIDSearchButton.isSelected()){
+
+    /**
+     * This method returns an integer representation of the radio button that is currently selected.
+     *
+     * @return
+     */
+    public int getSelectedSearchButton() {
+        if (clientIDSearchButton.isSelected()) {
             return 1;
-        } else if (lastNameSearchButton.isSelected()){
+        } else if (lastNameSearchButton.isSelected()) {
             return 2;
-        } else if (clientTypeSearchButton.isSelected()){
+        } else if (clientTypeSearchButton.isSelected()) {
             return 3;
         }
         return 0;
     }
 
+    public String getClientID() {
+        return clientIDTextField.getText();
+    }
+
+    public String getFirstName() {
+        return firstNameTextField.getText();
+    }
+
+    public String getLastName() {
+        return lastNameTextField.getText();
+    }
+
+    public String getAddress() {
+        return addressTextField.getText();
+    }
+
+    public String getPostalCode() {
+        return postalCodeTextField.getText();
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumberTextField.getText();
+    }
+
+    public String getClientType() {
+        return (String) clientTypeSpinner.getValue();
+    }
+
     public static void main(String[] args) {
         new ClientManagementSystemView().setVisible(true);
     }
-	
-	
+
+    public void setClientIDText(String text) {
+        this.clientIDTextField.setText(text);
+    }
+
+    public void setFirstNameTextField(String text) {
+        this.firstNameTextField.setText(text);
+    }
+
+    public void setLastNameTextField(String text) {
+        this.lastNameTextField.setText(text);
+    }
+
+    public void setAddressTextField(String text) {
+        this.addressTextField.setText(text);
+    }
+
+    public void setPostalCodeTextField(String text) {
+        this.postalCodeTextField.setText(text);
+    }
+
+    public void setPhoneNumberTextField(String text) {
+        this.phoneNumberTextField.setText(text);
+    }
+
+    public void setClientTypeSpinner(String text) {
+        this.clientTypeSpinner.setValue(text);
+    }
+
+    public void updateTextFields (String[] texts){
+        clientIDTextField.setText(texts[0].trim());
+        firstNameTextField.setText(texts[1].trim());
+        lastNameTextField.setText(texts[2].trim());
+        addressTextField.setText(texts[3].trim());
+        postalCodeTextField.setText(texts[4].trim());
+        phoneNumberTextField.setText(texts[5].trim());
+        clientTypeSpinner.setValue(texts[6].trim());
+    }
 }
 
