@@ -6,6 +6,9 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 /**
  * Creates the main window of the Client Management System user interface
@@ -13,7 +16,8 @@ import java.awt.*;
 public class ClientManagementSystemView extends JFrame {
 
     //the search results should be saved in this DefaultListModel
-    private DefaultListModel searchResults = new DefaultListModel();
+    private DefaultListModel<String> searchResults = new DefaultListModel<>();
+    private JList<String> searchResultList = new JList<>(searchResults);
 
     private JRadioButton clientIDSearchButton = new JRadioButton("Client ID");
     private JRadioButton lastNameSearchButton = new JRadioButton("Last Name");
@@ -137,7 +141,7 @@ public class ClientManagementSystemView extends JFrame {
         JPanel searchResultsPanel = new JPanel();
         searchResultsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         searchResultsPanel.setLayout(new BorderLayout(0,10));
-        JList searchResultList = new JList(searchResults);
+//        JList searchResultList = new JList(searchResults);
         JLabel searchResultsPanelLabel = new JLabel("Search Results", SwingConstants.CENTER);
         searchResultsPanel.add(searchResultsPanelLabel,BorderLayout.NORTH);
         searchResultsPanel.add(searchResultList, BorderLayout.CENTER);
@@ -192,6 +196,70 @@ public class ClientManagementSystemView extends JFrame {
 
     }
 
+    /*public void setUpActionListeners(MouseListener searchResultsListListener, ActionListener clientIDSearchButtonListener,
+                                     ActionListener lastNameSearchButtonListener, ActionListener clientTypeSearchButtonListener,
+                                     ActionListener searchBoxTextFieldListener, ActionListener searchButtonListener, ActionListener clearSearchButtonListener,
+                                     ActionListener saveButtonListener, ActionListener deleteButtonListener, ActionListener clearButtonListener){
+
+        searchResultList.addMouseListener(searchResultsListListener);
+        clientIDSearchButton.addActionListener(clientIDSearchButtonListener);
+        lastNameSearchButton.addActionListener(lastNameSearchButtonListener);
+        clientTypeSearchButton.addActionListener(clientTypeSearchButtonListener);
+        searchBoxTextField.addActionListener(searchBoxTextFieldListener);
+        searchButton.addActionListener(searchButtonListener);
+        clearSearchButton.addActionListener(clearSearchButtonListener);
+        saveButton.addActionListener(saveButtonListener);
+        deleteButton.addActionListener(deleteButtonListener);
+        clearButton.addActionListener(clearButtonListener);
+    }*/
+
+    //TODO: TEST METHOD; DELETE AFTER TESTING
+    public void setListeners(ActionListener test, ActionListener test2){
+        searchButton.addActionListener(test);
+        clearSearchButton.addActionListener(test2);
+    }
+
+    public void clearSearchResults(){
+        searchResults.removeAllElements();
+    }
+
+    public void clearClientInformation(){
+        clientIDTextField.setText("");
+        firstNameTextField.setText("");
+        lastNameTextField.setText("");
+        addressTextField.setText("");
+        postalCodeTextField.setText("");
+        phoneNumberTextField.setText("");
+
+    }
+
+    public String getSelectedSearchResult(){
+        return searchResultList.getSelectedValue();
+    }
+
+    public String getSearchBoxTextFieldText(){
+        return searchBoxTextField.getText();
+    }
+
+    public DefaultListModel<String> getSearchResults() {
+        return searchResults;
+    }
+
+    public void setSearchResults(ArrayList<Client> searchResults) {
+        for(Client result : searchResults){
+            this.searchResults.addElement(result.toString());
+        }
+    }
+    public int getSelectedSearchButton(){
+        if (clientIDSearchButton.isSelected()){
+            return 1;
+        } else if (lastNameSearchButton.isSelected()){
+            return 2;
+        } else if (clientTypeSearchButton.isSelected()){
+            return 3;
+        }
+        return 0;
+    }
 
 
     public static void main(String[] args) {
