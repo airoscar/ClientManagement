@@ -43,8 +43,6 @@ public class LoadDataFromFile {
         } catch (Exception error) {
             //JOptionPane.showMessageDialog(null, "Failed to load data from file.");
         }
-
         return null;
     }
-
 }

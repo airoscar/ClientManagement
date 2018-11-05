@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Data model
+ */
 public class ClientManagementSystemData {
     private Connection dbConnection;
     private String dbName;

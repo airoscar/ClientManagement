@@ -35,7 +35,6 @@ public class ClientManagementSystemDBLogin extends JFrame {
         setLocationRelativeTo(null);
 
         setResizable(false);
-
     }
 
     /**
@@ -141,5 +140,4 @@ public class ClientManagementSystemDBLogin extends JFrame {
     public String getDBName (){
         return dbNameField.getText();
     }
-
 }
