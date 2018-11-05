@@ -5,6 +5,7 @@
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
@@ -53,16 +54,20 @@ public class ClientManagementSystemView extends JFrame {
         setResizable(false);
     }
 
+    /**
+     * Add panels to view.
+     */
     private void addPanelsToView() {
-
         JPanel northPanel = northPanel();
         JPanel centerPanel = centerPanel();
-
-
         add(BorderLayout.NORTH, northPanel);
         add(BorderLayout.CENTER, centerPanel);
     }
 
+    /**
+     * Set up north panel.
+     * @return
+     */
     private JPanel northPanel() {
         JPanel northPanel = new JPanel();
         northPanel.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -70,11 +75,13 @@ public class ClientManagementSystemView extends JFrame {
         screenTitle.setFont(new Font("SANS_SERIF", Font.PLAIN, 30));
         northPanel.add(screenTitle);
         northPanel.setBackground(new Color(148, 148, 184));
-
         return northPanel;
     }
 
-
+    /**
+     * Set up center panel.
+     * @return
+     */
     private JPanel centerPanel() {
 
         //This panel is the main panel with two sections split vertically: Search Client section on the left
@@ -141,9 +148,9 @@ public class ClientManagementSystemView extends JFrame {
         JPanel searchResultsPanel = new JPanel();
         searchResultsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         searchResultsPanel.setLayout(new BorderLayout(0, 10));
-//        JList searchResultList = new JList(searchResults);
         JLabel searchResultsPanelLabel = new JLabel("Search Results", SwingConstants.CENTER);
         searchResultsPanel.add(searchResultsPanelLabel, BorderLayout.NORTH);
+        searchResultList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         searchResultsPanel.add(searchResultList, BorderLayout.CENTER);
         searchResultsPanel.add(new JScrollPane(searchResultList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER));
 
@@ -188,19 +195,26 @@ public class ClientManagementSystemView extends JFrame {
 
         clientInformationSection.add(clientInformationSectionSouthPanel, BorderLayout.SOUTH);
 
-
         centerPanel.add(searchSection);
         centerPanel.add(clientInformationSection);
 
         return centerPanel;
-
     }
 
-    public void setUpActionListeners(MouseListener searchResultsListListener, ActionListener searchButtonListener,
+    /**
+     * Set up listeners for buttons and list.
+     * @param searchResultsListListener
+     * @param searchButtonListener
+     * @param clearSearchButtonListener
+     * @param saveButtonListener
+     * @param deleteButtonListener
+     * @param clearButtonListener
+     */
+    public void setUpActionListeners(ListSelectionListener searchResultsListListener, ActionListener searchButtonListener,
                                      ActionListener clearSearchButtonListener, ActionListener saveButtonListener,
                                      ActionListener deleteButtonListener, ActionListener clearButtonListener) {
 
-        searchResultList.addMouseListener(searchResultsListListener);
+        searchResultList.addListSelectionListener(searchResultsListListener);
         searchButton.addActionListener(searchButtonListener);
         clearSearchButton.addActionListener(clearSearchButtonListener);
         saveButton.addActionListener(saveButtonListener);
@@ -208,11 +222,16 @@ public class ClientManagementSystemView extends JFrame {
         clearButton.addActionListener(clearButtonListener);
     }
 
-
+    /**
+     * Clear search result.
+     */
     public void clearSearchResults() {
         searchResults.removeAllElements();
     }
 
+    /**
+     * Clear input text fields.
+     */
     public void clearClientInformation() {
         clientIDTextField.setText("");
         firstNameTextField.setText("");
@@ -220,9 +239,12 @@ public class ClientManagementSystemView extends JFrame {
         addressTextField.setText("");
         postalCodeTextField.setText("");
         phoneNumberTextField.setText("");
-
     }
 
+    /**
+     * Get value of selected list item.
+     * @return
+     */
     public String getSelectedSearchResult() {
         return searchResultList.getSelectedValue();
     }
@@ -317,6 +339,10 @@ public class ClientManagementSystemView extends JFrame {
         this.clientTypeSpinner.setValue(text);
     }
 
+    /**
+     * Update value of text fields from a array of String types.
+     * @param texts
+     */
     public void updateTextFields (String[] texts){
         clientIDTextField.setText(texts[0].trim());
         firstNameTextField.setText(texts[1].trim());

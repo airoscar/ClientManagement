@@ -4,15 +4,12 @@
 // November 5 2018
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.io.File;
-
 
 public class ClientManagementSystemData {
     private Connection dbConnection;
@@ -448,9 +445,7 @@ public class ClientManagementSystemData {
             client.setClientType(details[5]);
             addClient(client);
         }
-
     }
-
 
     //code testing
     public static void main(String[] args) {
@@ -482,8 +477,5 @@ public class ClientManagementSystemData {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
-
 }

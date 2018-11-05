@@ -1,45 +1,25 @@
-
 // ENSF 519-2 Java Project I
 // Client Management System
 // Oscar Chen & Savith Jayasekera
 // November 5 2018
 
-import java.sql.SQLException;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
-
 
 public class ClientManagementSystemController {
 
     private ClientManagementSystemData dataModel;
     private ClientManagementSystemView view;
 
-
     ClientManagementSystemController() {
         dataModel = new ClientManagementSystemData();
         view = new ClientManagementSystemView();
-
-
-        try {
-            dataModel.setUpDatabase("root", "greencreatures", "clientsDB");
-            dataModel.initializeDatabase();
-
-
-            //TODO: TEST CODE: DELETE AFTER TESTING
-            dataModel.addClient(new Client("Co", "Guy", "123 Sri lankadabada Drive", "A7K5J5", "3063731234", "C"));
-            dataModel.addClient(new Client("Mot", "Teres", "34 Sri Drive", "A7K 5J5", "306-373-3065", "c"));
-
-            setUpView();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        view.setVisible(true);
-
+        setUpData();
+        setUpView();
     }
 
     private void searchButtonPressed() throws Exception {
@@ -64,6 +44,11 @@ public class ClientManagementSystemController {
         view.setSearchResults(searchResults);
     }
 
+    /**
+     * Gets called when the save button is pressed.
+     *
+     * @throws Exception
+     */
     private void saveButtonPressed() throws Exception {
         Client client = new Client();
         client.setDataID(view.getClientID());
@@ -82,6 +67,11 @@ public class ClientManagementSystemController {
         searchButtonPressed();
     }
 
+    /**
+     * Gets called when the delete button is pressed.
+     *
+     * @throws Exception
+     */
     private void deleteButtonPressed() throws Exception {
         String clientID = view.getClientID();
         if (clientID.equalsIgnoreCase("")) {
@@ -103,7 +93,7 @@ public class ClientManagementSystemController {
      * Sets up the UI View.</br>
      * Creates various listeners for the View.
      */
-    private void setUpView() throws Exception {
+    private void setUpView() {
 
         ActionListener searchButtonListener = new ActionListener() {    //set up listener for Search button
             @Override
@@ -117,7 +107,6 @@ public class ClientManagementSystemController {
         };
 
         ActionListener clearSearchButtonListener = e -> view.clearSearchResults();  //set up listener for Search Clear button
-
 
         ActionListener saveButtonListener = new ActionListener() {
             @Override
@@ -149,67 +138,35 @@ public class ClientManagementSystemController {
             }
         };
 
-        MouseListener listListener = new MouseListener() {
+        ListSelectionListener listListener = new ListSelectionListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void valueChanged(ListSelectionEvent e) {
                 try {
                     listClicked();
                 }catch (Exception error) {
                     JOptionPane.showMessageDialog(null, error.getMessage());
                 }
             }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                return;
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                return;
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                return;
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                return;
-            }
         };
 
         view.setUpActionListeners(listListener, searchButtonListener, clearSearchButtonListener, saveButtonListener,
                 deleteButtonListener, clearButtonListener);
 
-        //TODO: Complete after JList display is configured
-        /*MouseListener searchResultsListener = new MouseListener() {
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                String selectedItem = view.getSelectedSearchResult();
-
-            }
-        };*/
+        view.setVisible(true);
     }
 
-
+    /**
+     * Set up data model
+     */
     private void setUpData() {
         try {
+            String username = JOptionPane.showInputDialog("Please enter username: ");
+            String password = JOptionPane.showInputDialog("Please enter password: ");
+            String database = JOptionPane.showInputDialog("Please enter name of the database: ", "client_db");
+            dataModel.setUpDatabase(username, password, database);
             dataModel.initializeDatabase();
-        } catch (SQLException e) {
-
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
-
-    //TODO: TESTING METHOD: DELETE AFTER TESTING
-    public static void main(String[] args) {
-
-        new ClientManagementSystemController();
-
-
-    }
-
-
 }
