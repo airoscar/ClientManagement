@@ -3,9 +3,9 @@
 // Oscar Chen & Savith Jayasekera
 // November 5 2018
 
-public class ClientPostalException extends Exception {
+public class InputPostalException extends Exception {
 
-    public ClientPostalException () {
+    public InputPostalException() {
         super ("Invalid postal code: postal code must be in the format of 'A1A 1A1'.");
     }
 }

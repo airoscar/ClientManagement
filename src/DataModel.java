@@ -95,28 +95,28 @@ public class DataModel {
     private Person verifyInput(Person person) throws Exception {
 
         if (person.getFirstName().length() > 20) {
-            throw new ClientDataInputException();
+            throw new InputNameAddressException();
         }
         if (person.getLastName().length() > 20) {
-            throw new ClientDataInputException();
+            throw new InputNameAddressException();
         }
         if (person.getAddress().length() > 50) {
-            throw new ClientDataInputException();
+            throw new InputNameAddressException();
         }
         if (fixPostalFormat(person.getPostalCode()) == null) {
-            throw new ClientPostalException();
+            throw new InputPostalException();
         } else {
             person.setPostalCode(fixPostalFormat(person.getPostalCode()));
         }
         if (fixPhoneNumber(person.getPhoneNumber()) == null) {
-            throw new ClientPhoneNumberException();
+            throw new InputPhoneNumberException();
         } else {
             person.setPhoneNumber(fixPhoneNumber(person.getPhoneNumber()));
         }
         if (person.getClientType().equalsIgnoreCase("C") || person.getClientType().equalsIgnoreCase("R")) {
             person.setClientType(person.getClientType().toUpperCase());
         } else {
-            throw new ClientTypeException();
+            throw new InputClientTypeException();
         }
 
         return person;

@@ -3,8 +3,8 @@
 // Oscar Chen & Savith Jayasekera
 // November 5 2018
 
-public class ClientTypeException extends Exception {
-    public ClientTypeException() {
+public class InputClientTypeException extends Exception {
+    public InputClientTypeException() {
         super("Invalid client type: client type must be either 'C' or 'R'.");
     }
 }

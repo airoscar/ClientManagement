@@ -3,9 +3,9 @@
 // Oscar Chen & Savith Jayasekera
 // November 5 2018
 
-public class ClientDataInputException extends Exception {
+public class InputNameAddressException extends Exception {
 
-    public ClientDataInputException () {
+    public InputNameAddressException() {
         super("Invalid client data entered: first name and last name should be no more than 20 characters long, " +
                 "address should be not more than 50 characters long.");
     }
