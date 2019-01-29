@@ -1,5 +1,5 @@
 // ENSF 519-2 Java Project I
-// Client Management System
+// Person Management System
 // Oscar Chen & Savith Jayasekera
 // November 5 2018
 
@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 /**
  * This class handles view of log in screen.
  */
-public class ClientManagementSystemDBLogin extends JFrame {
+public class ClientLoginView extends JFrame {
 
     private JTextField usernameField = new JTextField("root",15);
     private JPasswordField passwordField = new JPasswordField(15);
@@ -19,7 +19,7 @@ public class ClientManagementSystemDBLogin extends JFrame {
     private JButton okButton = new JButton("OK");
     private JButton cancelButton = new JButton("Cancel");
 
-    public ClientManagementSystemDBLogin(){
+    public ClientLoginView(){
         setTitle("Login to Database");
         setSize(450, 350);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

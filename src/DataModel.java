@@ -1,5 +1,5 @@
 // ENSF 519-2 Java Project I
-// Client Management System
+// Person Management System
 // Oscar Chen & Savith Jayasekera
 // November 5 2018
 
@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 /**
  * Data model
  */
-public class ClientManagementSystemData {
+public class DataModel {
     private Connection dbConnection;
     private String dbName;
     private String username;
@@ -58,15 +58,15 @@ public class ClientManagementSystemData {
     }
 
     /**
-     * Called upon to add a client entry into database.
+     * Called upon to add a person entry into database.
      *
-     * @param client
+     * @param person
      * @throws SQLException
      */
-    public void addClient(Client client) throws Exception {
+    public void addClient(Person person) throws Exception {
 
-        client = verifyInput(client);   //check input for data integrity
-        if (client == null) { //invalid input
+        person = verifyInput(person);   //check input for data integrity
+        if (person == null) { //invalid input
             return;
         }
 
@@ -74,12 +74,12 @@ public class ClientManagementSystemData {
                 " (firstname, lastname, address, postalCod, phoneNumber, clientType)" + " values (?, ?, ?, ?, ?, ?)";
 
         PreparedStatement preparedStmt = dbConnection.prepareStatement(query);
-        preparedStmt.setString(1, client.getFirstName());
-        preparedStmt.setString(2, client.getLastName());
-        preparedStmt.setString(3, client.getAddress());
-        preparedStmt.setString(4, client.getPostalCode());
-        preparedStmt.setString(5, client.getPhoneNumber());
-        preparedStmt.setString(6, client.getClientType());
+        preparedStmt.setString(1, person.getFirstName());
+        preparedStmt.setString(2, person.getLastName());
+        preparedStmt.setString(3, person.getAddress());
+        preparedStmt.setString(4, person.getPostalCode());
+        preparedStmt.setString(5, person.getPhoneNumber());
+        preparedStmt.setString(6, person.getClientType());
 
         preparedStmt.execute();
     }
@@ -89,37 +89,37 @@ public class ClientManagementSystemData {
      * Returns null if the input data does not meet requirement. </br>
      * Returns a re-formatted array of String type ready that meet format requirements.
      *
-     * @param client
+     * @param person
      * @return
      */
-    private Client verifyInput(Client client) throws Exception {
+    private Person verifyInput(Person person) throws Exception {
 
-        if (client.getFirstName().length() > 20) {
+        if (person.getFirstName().length() > 20) {
             throw new ClientDataInputException();
         }
-        if (client.getLastName().length() > 20) {
+        if (person.getLastName().length() > 20) {
             throw new ClientDataInputException();
         }
-        if (client.getAddress().length() > 50) {
+        if (person.getAddress().length() > 50) {
             throw new ClientDataInputException();
         }
-        if (fixPostalFormat(client.getPostalCode()) == null) {
+        if (fixPostalFormat(person.getPostalCode()) == null) {
             throw new ClientPostalException();
         } else {
-            client.setPostalCode(fixPostalFormat(client.getPostalCode()));
+            person.setPostalCode(fixPostalFormat(person.getPostalCode()));
         }
-        if (fixPhoneNumber(client.getPhoneNumber()) == null) {
+        if (fixPhoneNumber(person.getPhoneNumber()) == null) {
             throw new ClientPhoneNumberException();
         } else {
-            client.setPhoneNumber(fixPhoneNumber(client.getPhoneNumber()));
+            person.setPhoneNumber(fixPhoneNumber(person.getPhoneNumber()));
         }
-        if (client.getClientType().equalsIgnoreCase("C") || client.getClientType().equalsIgnoreCase("R")) {
-            client.setClientType(client.getClientType().toUpperCase());
+        if (person.getClientType().equalsIgnoreCase("C") || person.getClientType().equalsIgnoreCase("R")) {
+            person.setClientType(person.getClientType().toUpperCase());
         } else {
             throw new ClientTypeException();
         }
 
-        return client;
+        return person;
     }
 
     /**
@@ -231,7 +231,7 @@ public class ClientManagementSystemData {
      * @return
      * @throws SQLException
      */
-    public ArrayList<Client> searchColumn(String phrase, String column) throws SQLException {
+    public ArrayList<Person> searchColumn(String phrase, String column) throws SQLException {
         String query = "SELECT * FROM " + dataTableName + " WHERE " + column + " LIKE '%" + phrase + "%'";
 
         ResultSet result = dbConnection.createStatement().executeQuery(query);
@@ -241,24 +241,24 @@ public class ClientManagementSystemData {
 
     /**
      * Private utility methods used by search methods. </br>
-     * Accepts an objection of type ResultSet as parameter, puts content of set into an ArrayList of Client objects.
+     * Accepts an objection of type ResultSet as parameter, puts content of set into an ArrayList of Person objects.
      *
      * @param result
      * @return
      * @throws SQLException
      */
-    private ArrayList<Client> parseResultSetToList(ResultSet result) throws SQLException {
-        ArrayList<Client> resultList = new ArrayList<>();
+    private ArrayList<Person> parseResultSetToList(ResultSet result) throws SQLException {
+        ArrayList<Person> resultList = new ArrayList<>();
         while (result.next()) {
-            Client resultClient = new Client();
-            resultClient.setDataID(result.getString("id"));
-            resultClient.setFirstName(result.getString("firstname"));
-            resultClient.setLastName(result.getString("lastname"));
-            resultClient.setAddress(result.getString("address"));
-            resultClient.setPostalCode(result.getString("postalCod"));
-            resultClient.setPhoneNumber(result.getString("phoneNumber"));
-            resultClient.setClientType(result.getString("clientType"));
-            resultList.add(resultClient);
+            Person resultPerson = new Person();
+            resultPerson.setDataID(result.getString("id"));
+            resultPerson.setFirstName(result.getString("firstname"));
+            resultPerson.setLastName(result.getString("lastname"));
+            resultPerson.setAddress(result.getString("address"));
+            resultPerson.setPostalCode(result.getString("postalCod"));
+            resultPerson.setPhoneNumber(result.getString("phoneNumber"));
+            resultPerson.setClientType(result.getString("clientType"));
+            resultList.add(resultPerson);
         }
 
         return resultList;
@@ -275,34 +275,34 @@ public class ClientManagementSystemData {
     }
 
     /**
-     * Remove a client by providing the client as an object of type Client
+     * Remove a person by providing the person as an object of type Person
      *
-     * @param client
+     * @param person
      * @throws SQLException
      */
-    public void deleteClient(Client client) throws SQLException {
-        deleteClient(client.getDataID());
+    public void deleteClient(Person person) throws SQLException {
+        deleteClient(person.getDataID());
     }
 
     /**
-     * Updates a client's info by providing a new client object to overwrite one in the database which shares the same id.
-     * @param client
+     * Updates a person's info by providing a new person object to overwrite one in the database which shares the same id.
+     * @param person
      * @throws SQLException
      */
-    public void updateClient(Client client) throws Exception {
-        client = verifyInput(client);
+    public void updateClient(Person person) throws Exception {
+        person = verifyInput(person);
 
-        if (client == null){ //if input is invalid
+        if (person == null){ //if input is invalid
             return;
         }
 
-        String id = client.getDataID();
-        String firstname = client.getFirstName();
-        String lastname = client.getLastName();
-        String address = client.getAddress();
-        String postalCod = client.getPostalCode();
-        String phoneNumber = client.getPhoneNumber();
-        String clientType = client.getClientType();
+        String id = person.getDataID();
+        String firstname = person.getFirstName();
+        String lastname = person.getLastName();
+        String address = person.getAddress();
+        String postalCod = person.getPostalCode();
+        String phoneNumber = person.getPhoneNumber();
+        String clientType = person.getClientType();
 
         dbConnection.createStatement().execute(" UPDATE " + dataTableName +
                 " SET firstname = '" + firstname + "', lastname = '" + lastname + "', address = '" + address + "'," +
@@ -420,14 +420,14 @@ public class ClientManagementSystemData {
         while ((line = reader.readLine()) != null) {
             System.out.println(line);
             String [] details = line.split(";");
-            Client client = new Client();
-            client.setFirstName(details[0]);
-            client.setLastName(details[1]);
-            client.setAddress(details[2]);
-            client.setPostalCode(details[3]);
-            client.setPhoneNumber(details[4]);
-            client.setClientType(details[5]);
-            addClient(client);
+            Person person = new Person();
+            person.setFirstName(details[0]);
+            person.setLastName(details[1]);
+            person.setAddress(details[2]);
+            person.setPostalCode(details[3]);
+            person.setPhoneNumber(details[4]);
+            person.setClientType(details[5]);
+            addClient(person);
         }
     }
 }

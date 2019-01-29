@@ -1,12 +1,12 @@
 // ENSF 519-2 Java Project I
-// Client Management System
+// Person Management System
 // Oscar Chen & Savith Jayasekera
 // November 5 2018
 
 /**
  * Class which represents individual clients.
  */
-public class Client {
+public class Person {
 
     private String dataID;
     private String firstName;
@@ -19,7 +19,7 @@ public class Client {
     /**
      * Default constructor
      */
-    public Client() {
+    public Person() {
 
     }
 
@@ -27,7 +27,7 @@ public class Client {
      * Constructor that takes dataID attribute.
      * @param dataID
      */
-    public Client(String dataID) {
+    public Person(String dataID) {
         this.dataID = dataID;
     }
 
@@ -41,7 +41,7 @@ public class Client {
      * @param phoneNumber
      * @param clientType
      */
-    public Client(String dataID, String firstName, String lastName,
+    public Person(String dataID, String firstName, String lastName,
                   String address, String postalCode, String phoneNumber, String clientType) {
         this(firstName, lastName, address, postalCode, phoneNumber, clientType);
         this.dataID = dataID;
@@ -56,7 +56,7 @@ public class Client {
      * @param phoneNumber
      * @param clientType
      */
-    public Client(String firstName, String lastName,
+    public Person(String firstName, String lastName,
                   String address, String postalCode, String phoneNumber, String clientType) {
         this.firstName = firstName;
         this.lastName = lastName;

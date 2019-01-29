@@ -1,5 +1,5 @@
 // ENSF 519-2 Java Project I
-// Client Management System
+// Person Management System
 // Oscar Chen & Savith Jayasekera
 // November 5 2018
 
@@ -11,9 +11,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * Creates the main window of the Client Management System user interface
+ * Creates the main window of the Person Management System user interface
  */
-public class ClientManagementSystemView extends JFrame {
+public class ClientAppView extends JFrame {
 
     //the search results should be saved in this DefaultListModel
     private DefaultListModel<String> searchResults = new DefaultListModel<>();
@@ -43,7 +43,7 @@ public class ClientManagementSystemView extends JFrame {
     /**
      * Creates the main window of the user interface
      */
-    public ClientManagementSystemView() {
+    public ClientAppView() {
         setSize(1200, 750);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //opens the window centered at the middle of the screen
@@ -85,12 +85,12 @@ public class ClientManagementSystemView extends JFrame {
      */
     private JPanel centerPanel() {
 
-        //This panel is the main panel with two sections split vertically: Search Client section on the left
-        //and the Client Information section on the right
+        //This panel is the main panel with two sections split vertically: Search Person section on the left
+        //and the Person Information section on the right
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new GridLayout(1, 2));
 
-        //This panel is the Search Client section. It is split horizontally into: Search Selection on top and
+        //This panel is the Search Person section. It is split horizontally into: Search Selection on top and
         //Search Results on the bottom
         JPanel searchSection = new JPanel();
         searchSection.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -158,7 +158,7 @@ public class ClientManagementSystemView extends JFrame {
         searchSection.add(searchSelection);
         searchSection.add(searchResultsPanel);
 
-        //Creates the Client Information section
+        //Creates the Person Information section
         JPanel clientInformationSection = new JPanel();
         clientInformationSection.setBorder(BorderFactory.createLineBorder(Color.black));
         clientInformationSection.setLayout(new BorderLayout(0, 30));
@@ -267,8 +267,8 @@ public class ClientManagementSystemView extends JFrame {
         return searchResults;
     }
 
-    public void setSearchResults(ArrayList<Client> searchResults) {
-        for (Client result : searchResults) {
+    public void setSearchResults(ArrayList<Person> searchResults) {
+        for (Person result : searchResults) {
             this.searchResults.addElement(result.toString());
         }
     }

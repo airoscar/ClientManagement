@@ -1,5 +1,5 @@
 // ENSF 519-2 Java Project I
-// Client Management System
+// Person Management System
 // Oscar Chen & Savith Jayasekera
 // November 5 2018
 
@@ -15,16 +15,16 @@ import java.util.ArrayList;
  * Controller that delegates between View and Data. <br>
  * Sets up View and Data.
  */
-public class ClientManagementSystemController {
+public class SystemController {
 
-    private ClientManagementSystemData dataModel;
-    private ClientManagementSystemView view;
-    private ClientManagementSystemDBLogin loginWindow;
+    private DataModel dataModel;
+    private ClientAppView view;
+    private ClientLoginView loginWindow;
 
-    ClientManagementSystemController() {
-        dataModel = new ClientManagementSystemData();
-        view = new ClientManagementSystemView();
-        loginWindow = new ClientManagementSystemDBLogin();
+    SystemController() {
+        dataModel = new DataModel();
+        view = new ClientAppView();
+        loginWindow = new ClientLoginView();
         setUp();
     }
 
@@ -37,7 +37,7 @@ public class ClientManagementSystemController {
         view.clearSearchResults();
         String phrase = view.getSearchBoxTextFieldText();   //phrase to search for
         String column = "";     //the column in which to search for the phrase
-        ArrayList<Client> searchResults;
+        ArrayList<Person> searchResults;
 
         int selectedButton = view.getSelectedSearchButton();//Read radio button selection
 
@@ -61,19 +61,19 @@ public class ClientManagementSystemController {
      * @throws Exception
      */
     private void saveButtonPressed() throws Exception {
-        Client client = new Client();
-        client.setDataID(view.getClientID());
-        client.setFirstName(view.getFirstName());
-        client.setLastName(view.getLastName());
-        client.setAddress(view.getAddress());
-        client.setPostalCode(view.getPostalCode());
-        client.setPhoneNumber(view.getPhoneNumber());
-        client.setClientType(view.getClientType());
+        Person person = new Person();
+        person.setDataID(view.getClientID());
+        person.setFirstName(view.getFirstName());
+        person.setLastName(view.getLastName());
+        person.setAddress(view.getAddress());
+        person.setPostalCode(view.getPostalCode());
+        person.setPhoneNumber(view.getPhoneNumber());
+        person.setClientType(view.getClientType());
 
         if (view.getClientID().equalsIgnoreCase("")) {
-            dataModel.addClient(client);
+            dataModel.addClient(person);
         } else {
-            dataModel.updateClient(client);
+            dataModel.updateClient(person);
         }
         searchButtonPressed();
     }
