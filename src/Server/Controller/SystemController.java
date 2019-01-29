@@ -1,7 +1,15 @@
+package Server.Controller;
+
 // ENSF 519-2 Java Project I
-// Person Management System
+// Server.Model.Person Management System
 // Oscar Chen & Savith Jayasekera
 // November 5 2018
+
+import Client.ClientView.ClientAppView;
+import Client.ClientView.ClientLoginView;
+import Client.ClientView.LoadDataFromFile;
+import Server.Model.DataModel;
+import Shared.Person;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -12,7 +20,7 @@ import java.io.BufferedReader;
 import java.util.ArrayList;
 
 /**
- * Controller that delegates between View and Data. <br>
+ * Server.Controller that delegates between View and Data. <br>
  * Sets up View and Data.
  */
 public class SystemController {
@@ -21,7 +29,7 @@ public class SystemController {
     private ClientAppView view;
     private ClientLoginView loginWindow;
 
-    SystemController() {
+    public SystemController() {
         dataModel = new DataModel();
         view = new ClientAppView();
         loginWindow = new ClientLoginView();

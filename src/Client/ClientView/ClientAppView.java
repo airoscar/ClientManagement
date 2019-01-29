@@ -1,7 +1,11 @@
+package Client.ClientView;
+
 // ENSF 519-2 Java Project I
-// Person Management System
+// Server.Model.Person Management System
 // Oscar Chen & Savith Jayasekera
 // November 5 2018
+
+import Shared.Person;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -11,7 +15,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * Creates the main window of the Person Management System user interface
+ * Creates the main window of the Server.Model.Person Management System user interface
  */
 public class ClientAppView extends JFrame {
 
@@ -85,12 +89,12 @@ public class ClientAppView extends JFrame {
      */
     private JPanel centerPanel() {
 
-        //This panel is the main panel with two sections split vertically: Search Person section on the left
-        //and the Person Information section on the right
+        //This panel is the main panel with two sections split vertically: Search Server.Model.Person section on the left
+        //and the Server.Model.Person Information section on the right
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new GridLayout(1, 2));
 
-        //This panel is the Search Person section. It is split horizontally into: Search Selection on top and
+        //This panel is the Search Server.Model.Person section. It is split horizontally into: Search Selection on top and
         //Search Results on the bottom
         JPanel searchSection = new JPanel();
         searchSection.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -158,7 +162,7 @@ public class ClientAppView extends JFrame {
         searchSection.add(searchSelection);
         searchSection.add(searchResultsPanel);
 
-        //Creates the Person Information section
+        //Creates the Server.Model.Person Information section
         JPanel clientInformationSection = new JPanel();
         clientInformationSection.setBorder(BorderFactory.createLineBorder(Color.black));
         clientInformationSection.setLayout(new BorderLayout(0, 30));

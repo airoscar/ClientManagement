@@ -1,7 +1,11 @@
+package Server.Model;
+
 // ENSF 519-2 Java Project I
-// Person Management System
+// Server.Model.Person Management System
 // Oscar Chen & Savith Jayasekera
 // November 5 2018
+
+import Shared.*;
 
 import java.io.BufferedReader;
 import java.sql.*;
@@ -241,7 +245,7 @@ public class DataModel {
 
     /**
      * Private utility methods used by search methods. </br>
-     * Accepts an objection of type ResultSet as parameter, puts content of set into an ArrayList of Person objects.
+     * Accepts an objection of type ResultSet as parameter, puts content of set into an ArrayList of Server.Model.Person objects.
      *
      * @param result
      * @return
@@ -275,7 +279,7 @@ public class DataModel {
     }
 
     /**
-     * Remove a person by providing the person as an object of type Person
+     * Remove a person by providing the person as an object of type Server.Model.Person
      *
      * @param person
      * @throws SQLException
