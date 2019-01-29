@@ -3,8 +3,6 @@
 // Oscar Chen & Savith Jayasekera
 // November 5 2018
 
-import javax.swing.*;
-
 public class Application {
     public static void main(String[] args) {
             new ClientManagementSystemController();

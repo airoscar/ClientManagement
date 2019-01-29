@@ -12,7 +12,7 @@ import java.io.BufferedReader;
 import java.util.ArrayList;
 
 /**
- * Controller that delegates between View and Data. </br>
+ * Controller that delegates between View and Data. <br>
  * Sets up View and Data.
  */
 public class ClientManagementSystemController {
