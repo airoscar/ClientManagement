@@ -3,7 +3,7 @@
 // Oscar Chen & Savith Jayasekera
 // November 5 2018
 
-public class Application {
+public class ClientApplication {
     public static void main(String[] args) {
             new SystemController();
     }
