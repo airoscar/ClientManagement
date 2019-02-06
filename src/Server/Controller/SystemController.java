@@ -8,7 +8,7 @@ package Server.Controller;
 import Client.ClientView.ClientAppView;
 import Client.ClientView.ClientLoginView;
 import Client.ClientView.LoadDataFromFile;
-import Server.Model.DataModel;
+import Server.Model.DatabaseController;
 import Shared.Person;
 
 import javax.swing.*;
@@ -25,12 +25,12 @@ import java.util.ArrayList;
  */
 public class SystemController {
 
-    private DataModel dataModel;
+    private DatabaseController databaseController;
     private ClientAppView view;
     private ClientLoginView loginWindow;
 
     public SystemController() {
-        dataModel = new DataModel();
+        databaseController = new DatabaseController();
         view = new ClientAppView();
         loginWindow = new ClientLoginView();
         setUp();
@@ -59,7 +59,7 @@ public class SystemController {
         } else if (selectedButton == 3) {
             column = "clientType";
         }
-        searchResults = dataModel.searchColumn(phrase, column);
+        searchResults = databaseController.searchColumn(phrase, column);
         view.setSearchResults(searchResults);
     }
 
@@ -79,9 +79,9 @@ public class SystemController {
         person.setClientType(view.getClientType());
 
         if (view.getClientID().equalsIgnoreCase("")) {
-            dataModel.addClient(person);
+            databaseController.addClient(person);
         } else {
-            dataModel.updateClient(person);
+            databaseController.updateClient(person);
         }
         searchButtonPressed();
     }
@@ -96,7 +96,7 @@ public class SystemController {
         if (clientID.equalsIgnoreCase("")) {
             return;
         } else {
-            dataModel.deleteClient(clientID);
+            databaseController.deleteClient(clientID);
         }
         view.clearClientInformation();
         searchButtonPressed();
@@ -191,7 +191,7 @@ public class SystemController {
             return;
         }
         try {
-            dataModel.uploadFileToDatabase(reader);
+            databaseController.uploadFileToDatabase(reader);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
@@ -205,9 +205,9 @@ public class SystemController {
         ActionListener okButtonListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dataModel.setUpDatabase(loginWindow.getUsername(), loginWindow.getPassword(), loginWindow.getDBName());
+                databaseController.setUpDatabase(loginWindow.getUsername(), loginWindow.getPassword(), loginWindow.getDBName());
                 try {
-                    dataModel.initializeDatabase();
+                    databaseController.initializeDatabase();
                     setUpView();
                     readDataFromFile();
                 } catch (Exception error) {

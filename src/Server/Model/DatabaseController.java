@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 /**
  * Data model
  */
-public class DataModel {
+public class DatabaseController {
     private Connection dbConnection;
     private String dbName;
     private String username;
@@ -87,6 +87,8 @@ public class DataModel {
 
         preparedStmt.execute();
     }
+
+    //TODO: Move below input data verification into a class, depended on by SystemController
 
     /**
      * Verify format of input data, make necessary changes to format if needed to maintain format consistency. </br>
