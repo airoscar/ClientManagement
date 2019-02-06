@@ -26,8 +26,8 @@ import java.util.ArrayList;
 public class SystemController {
 
     private DatabaseController databaseController;
-    private ClientAppView view;
-    private ClientLoginView loginWindow;
+    private ClientAppView view;             //TODO: move to Client.ViewController
+    private ClientLoginView loginWindow;    //TODO: move to Client.ViewController
 
     public SystemController() {
         databaseController = new DatabaseController();
