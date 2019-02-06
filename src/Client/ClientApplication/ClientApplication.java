@@ -5,10 +5,8 @@ package Client.ClientApplication;
 // Oscar Chen & Savith Jayasekera
 // November 5 2018
 
-import Server.Controller.SystemController;
-
 public class ClientApplication {
     public static void main(String[] args) {
-            new SystemController();
+            new ClientViewController();
     }
 }

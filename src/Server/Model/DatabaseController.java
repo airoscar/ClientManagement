@@ -88,7 +88,7 @@ public class DatabaseController {
         preparedStmt.execute();
     }
 
-    //TODO: Move below input data verification into a class, depended on by SystemController
+    //TODO: Move below input data verification into a class, depended on by ClientViewController
 
     /**
      * Verify format of input data, make necessary changes to format if needed to maintain format consistency. </br>
