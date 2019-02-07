@@ -1,6 +1,7 @@
 package Server.Controller;
 
 import Server.SMS;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.concurrent.ExecutorService;
@@ -13,18 +14,18 @@ public class ServerApplication {
     private int port;
     private SystemController sysController = new SystemController();
 
-    public ServerApplication (int port) {
+    public ServerApplication(int port) {
         this.port = port;
     }
 
-    public void start(){
+    public void start() {
 
         try {
             serverSocket = new ServerSocket(port);
             SMS.print("Server started..");
 
             InetAddress inetAddress = InetAddress.getLocalHost();
-            SMS.print("Host Name: "+inetAddress.getHostName());
+            SMS.print("Host Name: " + inetAddress.getHostName());
             SMS.print("Server IP Address on local network:" + inetAddress.getHostAddress());
 
             while (true) {
@@ -41,7 +42,6 @@ public class ServerApplication {
 
         ServerApplication a = new ServerApplication(8989);
         a.start();
-
 
 
     }
