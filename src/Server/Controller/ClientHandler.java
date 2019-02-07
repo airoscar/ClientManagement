@@ -19,6 +19,7 @@ public class ClientHandler implements Runnable{
         try {
             in = new ObjectInputStream(socket.getInputStream());
             out = new ObjectOutputStream(socket.getOutputStream());
+            SMS.print("ClientHandler started..");
         } catch (IOException e){
             SMS.print("ClientHandler failed to set up IO streams: " + e.getMessage());
         }
@@ -27,6 +28,7 @@ public class ClientHandler implements Runnable{
     @Override
     public void run() {
         try {
+            SMS.print("ClientHandler listening..");
             DataPack dataFromClient = (DataPack)in.readObject();
         } catch (IOException e) {
             SMS.print("ClientHandler encountered an error receiving data from client: " + e.getMessage());
@@ -35,6 +37,6 @@ public class ClientHandler implements Runnable{
         }
 
         DataPack dataToClient = sysController.processDataFromClient();
-        //TODO: pass dataFromClient to SystemController for processing
+
     }
 }

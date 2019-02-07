@@ -20,9 +20,10 @@ public class ServerApplication {
 
         try {
             serverSocket = new ServerSocket(port);
+            SMS.print("Server started..");
             while (true) {
                 executorService.execute(new ClientHandler(serverSocket.accept(), sysController));
-                SMS.print("Client connected..");
+
             }
 
         } catch (IOException e) {
@@ -32,7 +33,8 @@ public class ServerApplication {
 
     public static void main(String[] args) {
 
-
+        ServerApplication a = new ServerApplication(8989);
+        a.start();
     }
 
 
