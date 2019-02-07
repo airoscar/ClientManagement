@@ -8,11 +8,13 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class ClientHandler implements Runnable{
+    private SystemController sysController;
     private Socket socket;
     private ObjectInputStream in;
     private ObjectOutputStream out;
 
-    public ClientHandler(Socket socket){
+    public ClientHandler(Socket socket, SystemController sysController){
+        this.sysController = sysController;
         this.socket = socket;
         try {
             in = new ObjectInputStream(socket.getInputStream());
@@ -32,7 +34,7 @@ public class ClientHandler implements Runnable{
             SMS.print("ClientHandler encountered an error reading data received from client: " + e.getMessage());
         }
 
-        DataPack dataToClient =
+        DataPack dataToClient = sysController.processDataFromClient();
         //TODO: pass dataFromClient to SystemController for processing
     }
 }
