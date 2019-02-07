@@ -4,6 +4,7 @@ import Server.SMS;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.concurrent.ExecutorService;
+import java.net.InetAddress;
 
 public class ServerApplication {
 
@@ -21,6 +22,11 @@ public class ServerApplication {
         try {
             serverSocket = new ServerSocket(port);
             SMS.print("Server started..");
+
+            InetAddress inetAddress = InetAddress.getLocalHost();
+            SMS.print("Host Name: "+inetAddress.getHostName());
+            SMS.print("Server IP Address on local network:" + inetAddress.getHostAddress());
+
             while (true) {
                 executorService.execute(new ClientHandler(serverSocket.accept(), sysController));
 
@@ -35,6 +41,9 @@ public class ServerApplication {
 
         ServerApplication a = new ServerApplication(8989);
         a.start();
+
+
+
     }
 
 
