@@ -1,7 +1,7 @@
 package Server.Controller;
 
 import Server.SMS;
-
+import Shared.DataPack;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -24,6 +24,15 @@ public class ClientHandler implements Runnable{
 
     @Override
     public void run() {
-        //in.readObject();
+        try {
+            DataPack dataFromClient = (DataPack)in.readObject();
+        } catch (IOException e) {
+            SMS.print("ClientHandler encountered an error receiving data from client: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            SMS.print("ClientHandler encountered an error reading data received from client: " + e.getMessage());
+        }
+
+        DataPack dataToClient =
+        //TODO: pass dataFromClient to SystemController for processing
     }
 }
