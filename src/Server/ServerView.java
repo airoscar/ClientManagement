@@ -16,7 +16,7 @@ public class ServerView extends JFrame {
     public ServerView() {
         setTitle("Server Monitor");
         setSize(600, 600);
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(4, 1));
 
         this.add(serverStatusPanel());
@@ -58,7 +58,7 @@ public class ServerView extends JFrame {
         this.serverStatLabel = serverStatLabel;
     }
 
-    public static void addMessage(String msg) {
+    public static void print(String msg) {
         messageField.append(msg);
     }
 
