@@ -6,19 +6,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-
 public class DataVerifier {
-
-    private Person personToBeVerified;
 
     /**
      * Constructor for the DataVerifier class. This class is used to verify the values contained
      * within a Person object. Receives a Person object and verifies if all the fields
      * contain valid values. If there are invalid entries, tries to fix them
-     * @param personToBeVerified
+
      */
-    public DataVerifier(Person personToBeVerified){
-        this.personToBeVerified = personToBeVerified;
+    public DataVerifier() {
     }
 
     /**
@@ -28,33 +24,34 @@ public class DataVerifier {
      *
      * @return
      */
-    private Person verifyInput() throws Exception {
+    public Person verifyInput(Person person) throws Exception {
 
-        if (personToBeVerified.getFirstName().length() > 20) {
+        if (person.getFirstName().length() > 20) {
             throw new InputNameAddressException();
         }
-        if (personToBeVerified.getLastName().length() > 20) {
+        if (person.getLastName().length() > 20) {
+            throw new InputNameAddressException();
+
+        }
+        if (person.getAddress().length() > 50) {
             throw new InputNameAddressException();
         }
-        if (personToBeVerified.getAddress().length() > 50) {
-            throw new InputNameAddressException();
-        }
-        if (fixPostalFormat(personToBeVerified.getPostalCode()) == null) {
+        if (fixPostalFormat(person.getPostalCode()) == null) {
             throw new InputPostalException();
         } else {
-            personToBeVerified.setPostalCode(fixPostalFormat(personToBeVerified.getPostalCode()));
+            person.setPostalCode(fixPostalFormat(person.getPostalCode()));
         }
-        if (fixPhoneNumber(personToBeVerified.getPhoneNumber()) == null) {
+        if (fixPhoneNumber(person.getPhoneNumber()) == null) {
             throw new InputPhoneNumberException();
         } else {
-            personToBeVerified.setPhoneNumber(fixPhoneNumber(personToBeVerified.getPhoneNumber()));
+            person.setPhoneNumber(fixPhoneNumber(person.getPhoneNumber()));
         }
-        if (personToBeVerified.getClientType().equalsIgnoreCase("C") || personToBeVerified.getClientType().equalsIgnoreCase("R")) {
-            personToBeVerified.setClientType(personToBeVerified.getClientType().toUpperCase());
+        if (person.getClientType().equalsIgnoreCase("C") || person.getClientType().equalsIgnoreCase("R")) {
+            person.setClientType(person.getClientType().toUpperCase());
         } else {
             throw new InputClientTypeException();
         }
-        return personToBeVerified;
+        return person;
 
     }
 

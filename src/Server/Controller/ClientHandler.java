@@ -4,11 +4,13 @@ import Server.Model.DataVerifier;
 import Server.Model.DatabaseController;
 import Server.ServerView;
 import Shared.DataPack;
+import Shared.Person;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Iterator;
 
 public class ClientHandler implements Runnable {
     private DatabaseController databaseController;
@@ -46,10 +48,22 @@ public class ClientHandler implements Runnable {
 
         switch (data.getActionId()) {
             case 1: //add client
+                String msg = "";
+                if (data.getNumerOfPersons() > 0) {
 
-                if (data.getNumerOfPersons()>0) {
+                    Iterator<Person> it = data.getData().iterator();
 
-                    data.getData();
+                    while (it.hasNext()) {
+                        Person person;
+                        try {
+                            person = new DataVerifier().verifyInput(it.next());
+                            databaseController.addClient(person);
+
+                        } catch (Exception e) {
+                            msg = msg + "/n" + e.getMessage();
+                        }
+                    }
+
 
                 }
 
@@ -70,14 +84,13 @@ public class ClientHandler implements Runnable {
             case 4: //search for client
 
 
-
                 break;
 
 
             default:
                 break;
         }
-        if (data.getActionId() == 1){   //add client
+        if (data.getActionId() == 1) {   //add client
 
         }
 
