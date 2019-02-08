@@ -1,9 +1,18 @@
 package Client.ClientApplication;
 
-
+import javax.swing.*;
 
 public class ClientApplication {
     public static void main(String[] args) {
-            new ClientController("localhost", 8989);
+        try {
+            String serverAddress = JOptionPane.showInputDialog(null,
+                    "Enter the server address: ", "localhost");
+            int port = Integer.parseInt(JOptionPane.showInputDialog(null,
+                    "Enter the port number: ", "8989"));
+            new ClientController(serverAddress, port);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error Connecting to " +
+                    "specified server. Game will quit");
+        }
     }
 }
