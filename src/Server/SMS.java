@@ -5,8 +5,8 @@ package Server;
  */
 public class SMS {
 
-    //TODO: send the msg to ServerView.
     public static void print(String msg){
+        ServerView.addMessage(msg);
         System.out.println(msg);
     }
 }
