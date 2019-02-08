@@ -1,7 +1,6 @@
 package Server;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class ServerView extends JFrame {
@@ -15,20 +14,10 @@ public class ServerView extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(1, 1));
 
-//        this.add(serverStatusPanel());
         this.add(messageAreaPanel());
         this.setResizable(false);
         this.setVisible(true);
     }
-
-
-//    private JPanel serverStatusPanel (){
-//        JPanel serverStatus = new JPanel();
-//        serverStatus.setBorder(new EmptyBorder(10,10,10,10));
-//        serverStatus.setLayout(new GridLayout(1,1,0, 0));
-//        serverStatus.add(serverStatLabel);
-//        return serverStatus;
-//    }
 
     private JPanel messageAreaPanel () {
         JPanel msgPanel = new JPanel();
@@ -38,11 +27,6 @@ public class ServerView extends JFrame {
         messageField.setEditable(false);
         return msgPanel;
     }
-
-
-//    public void setServerStatLabel(JLabel serverStatLabel) {
-//        this.serverStatLabel = serverStatLabel;
-//    }
 
     public static void print(String msg) {
         messageField.append("\n" + msg);

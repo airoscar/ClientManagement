@@ -73,4 +73,9 @@ public class DataPack implements Serializable {
             return data.size();
         }
     }
+
+    @Override
+    public String toString() {
+        return "DataPack: actionId=" + this.actionId + " msg=" + this.msg + " array size=" + data.size();
+    }
 }

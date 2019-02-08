@@ -28,7 +28,6 @@ public class ServerApplication {
         loginWindow = new ServerLoginView();
         setUp();
         start();
-
     }
 
     private void start() {

@@ -5,6 +5,7 @@ package Server.Model;
 // Oscar Chen & Savith Jayasekera
 // November 5 2018
 
+import Server.ServerView;
 import Shared.*;
 
 import java.io.BufferedReader;
@@ -139,6 +140,7 @@ public class DatabaseController {
         String query = "SELECT * FROM " + dataTableName + " WHERE " + column + " LIKE '%" + phrase + "%'";
 
         ResultSet result = dbConnection.createStatement().executeQuery(query);
+
 
         return parseResultSetToList(result);
     }

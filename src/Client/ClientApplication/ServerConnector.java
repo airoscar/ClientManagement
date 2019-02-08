@@ -34,9 +34,11 @@ public class ServerConnector {
     private DataPack sendToServer(DataPack data) {
         DataPack responseFromServer = null;
         try {
-            System.out.println("ServerConnector.sendToServer: actionId="+ data.getActionId() + " msg=" +data.getMsg());
+            System.out.println("Sent to server: " + data);
             out.writeObject(data);
             responseFromServer = (DataPack) in.readObject();
+            System.out.println("Received from server: " + responseFromServer);
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -51,7 +53,10 @@ public class ServerConnector {
      * arraylist of person objects returned from the server. If an error occurred, returns null
      */
     public ArrayList<Person> sendSearchResultDataPack(String phrase, String column) {
-        DataPack serverResponse = sendToServer(new DataPack(4, phrase + "," + column));    //format of the message
+        DataPack data = new DataPack(4, phrase + "," + column);
+        DataPack serverResponse = sendToServer(data);    //format of the message
+        System.out.println(data);
+
         if (serverResponse != null) {
             return serverResponse.getData();
         }

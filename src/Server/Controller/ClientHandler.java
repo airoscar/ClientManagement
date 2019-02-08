@@ -38,11 +38,11 @@ public class ClientHandler implements Runnable {
             while (true) {
                 ServerView.print("ClientHandler listening for client..");
                 DataPack dataFromClient = (DataPack) in.readObject();
-                ServerView.print("DataPack received from client.");
+                ServerView.print("Received from client: " + dataFromClient);
 
                 DataPack dataToClient = processDataFromClient(dataFromClient);
                 out.writeObject(dataFromClient);
-                ServerView.print("DataPack sent to client");
+                ServerView.print("Sent to client: " + dataToClient);
             }
 
         } catch (IOException e) {
