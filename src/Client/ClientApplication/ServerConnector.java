@@ -53,7 +53,7 @@ public class ServerConnector {
      * Sends the appropriate datapack to the server when the client presses the search button. Returns the
      * arraylist of person objects returned from the server. If an error occurred, returns null
      */
-    public ArrayList<Person> sendSearchResultDataPack(String phrase, String column) {
+    public ArrayList<Person> sendSearchDataPack(String phrase, String column) {
         DataPack data = new DataPack(4, phrase + "," + column);
         DataPack serverResponse = sendToServer(data);    //format of the message
         System.out.println(data);

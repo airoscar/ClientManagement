@@ -51,7 +51,7 @@ public class ClientController {
             column = "clientType";
         }
 
-        searchResults = serverConnector.sendSearchResultDataPack(phrase, column);
+        searchResults = serverConnector.sendSearchDataPack(phrase, column);
 
         if (searchResults != null) {
             view.setSearchResults(searchResults);
