@@ -22,14 +22,16 @@ import java.util.ArrayList;
  * Server.Controller that delegates between View and Data. <br>
  * Sets up View and Data.
  */
-public class ClientViewController {
+public class ClientController {
 
     private ClientAppView view;
     private ClientLoginView loginWindow;
+    private ServerConnector serverConnector;
 
-    public ClientViewController() {
+    public ClientController(String serverAddress, int portNumber) {
         view = new ClientAppView();
         loginWindow = new ClientLoginView();
+        serverConnector = new ServerConnector(serverAddress, portNumber);
         setUp();
     }
 
@@ -56,7 +58,7 @@ public class ClientViewController {
         } else if (selectedButton == 3) {
             column = "clientType";
         }
-        searchResults = null; //TODO: Create searchDBColumn method and call it here;
+        searchResults = serverConnector.sendSearchResultDataPack(phrase, column);
         view.setSearchResults(searchResults);
     }
 
@@ -224,5 +226,30 @@ public class ClientViewController {
 
         loginWindow.setActionListeners(okButtonListener, canButtonListener);
         loginWindow.setVisible(true);
+    }
+
+    /**
+     * Receives an input of type BufferedReader. </br>
+     * Upload a txt file of client data to database. </br>
+     * The file must be structured such that each line represent a client. </br>
+     * The client's information must be separated by a semi-colon as such: </br>
+     * first name; last name; address; postal code; phone number; client type </br>
+     * See example txt file.
+     */
+    public void uploadFileToDatabase(BufferedReader reader) throws Exception {
+
+        String line;
+        while ((line = reader.readLine()) != null) {
+            System.out.println(line);
+            String [] details = line.split(";");
+            Person person = new Person();
+            person.setFirstName(details[0]);
+            person.setLastName(details[1]);
+            person.setAddress(details[2]);
+            person.setPostalCode(details[3]);
+            person.setPhoneNumber(details[4]);
+            person.setClientType(details[5]);
+            //addClient(person);  //TODO: add to a arraylist and send
+        }
     }
 }

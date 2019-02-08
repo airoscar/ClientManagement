@@ -1,10 +1,13 @@
 package Client.ClientApplication;
 
 import Shared.DataPack;
+import Shared.Person;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ServerConnector {
 
@@ -44,6 +47,13 @@ public class ServerConnector {
         return responseFromServer;
     }
 
+    public ArrayList<Person> sendSearchResultDataPack(String phrase, String column){
+        DataPack serverResponse =  sendToServer(new DataPack(4, phrase+","+column));
+        if (serverResponse != null){
+            return serverResponse.getData();
+        }
+        return null;
+    }
 
 
 
