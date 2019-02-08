@@ -18,9 +18,10 @@ public class ServerView extends JFrame {
 
         this.add(serverStatusPanel());
         this.add(messageAreaPanel());
-        this.setResizable(false);
+        this.setResizable(true);
         this.setVisible(true);
     }
+
 
     private JPanel serverStatusPanel (){
         JPanel serverStatus = new JPanel();
@@ -34,7 +35,6 @@ public class ServerView extends JFrame {
         JPanel msgPanel = new JPanel();
         JScrollPane scrollMessageBoard = new JScrollPane(messageField);
         scrollMessageBoard.setPreferredSize(new Dimension(800, 600));
-        msgPanel.setBorder(new EmptyBorder(3, 3, 2, 3));
         msgPanel.add(scrollMessageBoard);
         messageField.setEditable(false);
         return msgPanel;
@@ -46,7 +46,7 @@ public class ServerView extends JFrame {
     }
 
     public static void print(String msg) {
-        messageField.append(msg);
+        messageField.append("\n" + msg);
     }
 
 

@@ -17,13 +17,13 @@ public class ServerConnector {
 
     public ServerConnector(String server, int port) {
 
-        try{
+        try {
             Socket socket = new Socket(server, port);
 
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
 
-        } catch (IOException e){
+        } catch (IOException e) {
             System.err.println(e.getMessage());
         }
     }
@@ -31,9 +31,10 @@ public class ServerConnector {
     /**
      * Called upon with a DataPack, sends it to server, listens for a DataPack reply from server, return DataPack.
      */
-    private DataPack sendToServer(DataPack data){
+    private DataPack sendToServer(DataPack data) {
         DataPack responseFromServer = null;
         try {
+            System.out.println("ServerConnector.sendToServer: actionId="+ data.getActionId() + " msg=" +data.getMsg());
             out.writeObject(data);
             responseFromServer = (DataPack) in.readObject();
         } catch (IOException e) {
@@ -49,21 +50,21 @@ public class ServerConnector {
      * Sends the appropriate datapack to the server when the client presses the search button. Returns the
      * arraylist of person objects returned from the server. If an error occurred, returns null
      */
-    public ArrayList<Person> sendSearchResultDataPack(String phrase, String column){
-        DataPack serverResponse =  sendToServer(new DataPack(4, phrase+","+column));    //format of the message
-        if (serverResponse != null){
+    public ArrayList<Person> sendSearchResultDataPack(String phrase, String column) {
+        DataPack serverResponse = sendToServer(new DataPack(4, phrase + "," + column));    //format of the message
+        if (serverResponse != null) {
             return serverResponse.getData();
         }
         return null;
     }
 
-    public String sendMultipleClientsToAddToDatabase(ArrayList<Person> listOfPeople){
+    public String sendMultipleClientsToAddToDatabase(ArrayList<Person> listOfPeople) {
         DataPack serverResponse = sendToServer(new DataPack(1, listOfPeople));
         return serverResponse.getMsg();
     }
 
-    public boolean wasClientAdditionSuccessful(Person personToAdd){
-        DataPack serverResponse = sendToServer(new DataPack(1,personToAdd));
+    public boolean wasClientAdditionSuccessful(Person personToAdd) {
+        DataPack serverResponse = sendToServer(new DataPack(1, personToAdd));
         return processServerResponse(serverResponse);
     }
 
@@ -72,13 +73,13 @@ public class ServerConnector {
         return processServerResponse(serverResponse);
     }
 
-    public boolean wasClientDeletionSuccessful(Person personToDelete){
-        DataPack serverResponse = sendToServer(new DataPack(3,personToDelete));
+    public boolean wasClientDeletionSuccessful(Person personToDelete) {
+        DataPack serverResponse = sendToServer(new DataPack(3, personToDelete));
         return processServerResponse(serverResponse);
     }
 
-    private boolean processServerResponse(DataPack serverResponse){
-        if (serverResponse != null){
+    private boolean processServerResponse(DataPack serverResponse) {
+        if (serverResponse != null) {
             return serverResponse.getMsg().equalsIgnoreCase("success");     //if server message is "success", return true
         }
         return false;

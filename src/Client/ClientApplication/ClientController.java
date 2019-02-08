@@ -24,6 +24,8 @@ public class ClientController {
     public ClientController(String serverAddress, int portNumber) {
         view = new ClientAppView();
         serverConnector = new ServerConnector(serverAddress, portNumber);
+        setUpView();
+        readDataFromFile();
     }
 
     /**
@@ -203,36 +205,6 @@ public class ClientController {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-    }
-
-    /**
-     * Set up database log in. Initialize database. start View.
-     */
-    private void setUp() {
-
-        ActionListener okButtonListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    setUpView();
-                    readDataFromFile();
-                } catch (Exception error) {
-                    JOptionPane.showMessageDialog(null, error.getMessage());
-                }
-
-            }
-        };
-
-//        ActionListener canButtonListener = new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                loginWindow.setVisible(false);
-//                loginWindow.dispose();
-//            }
-//        };
-//
-//        loginWindow.setActionListeners(okButtonListener, canButtonListener);
-//        loginWindow.setVisible(true);
     }
 
     /**

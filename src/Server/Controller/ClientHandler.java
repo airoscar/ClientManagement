@@ -128,6 +128,8 @@ public class ClientHandler implements Runnable {
                 String searchPhrase = searchCriteria[0].trim();
                 String searchCol = searchCriteria[1].trim();
 
+                ServerView.print("searchPhrase=" + searchPhrase + " searchCol=" + searchCol);
+
                 try {
 
                     ArrayList<Person> results = databaseController.searchColumn(searchPhrase, searchCol);

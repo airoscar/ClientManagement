@@ -1,11 +1,13 @@
 package Shared;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Data Model used to communicate between client and server via socket
  */
-public class DataPack {
+public class DataPack implements Serializable {
+    private static final long serialversionUID = 666L;
     private int actionId;   // 1 - add; 2 - update/edit; 3 - delete; 4 - search
     private String msg;
     private ArrayList<Person> data;

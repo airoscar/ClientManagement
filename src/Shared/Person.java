@@ -5,11 +5,13 @@ package Shared;
 // Oscar Chen & Savith Jayasekera
 // November 5 2018
 
+import java.io.Serializable;
+
 /**
  * Class which represents individual clients.
  */
-public class Person {
-
+public class Person implements Serializable {
+    private static final long serialversionUID = 999L;
     private String dataID;
     private String firstName;
     private String lastName;

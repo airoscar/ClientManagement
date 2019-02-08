@@ -138,8 +138,4 @@ public class ServerLoginView extends JFrame {
         return dbNameField.getText();
     }
 
-    public static void main(String[] args) {
-        ServerLoginView a = new ServerLoginView();
-
-    }
 }

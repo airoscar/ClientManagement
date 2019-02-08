@@ -3,12 +3,15 @@ package Server.Controller;
 import Server.Model.DatabaseController;
 import Server.ServerLoginView;
 import Server.ServerView;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.sql.SQLException;
 import java.util.concurrent.ExecutorService;
 import java.net.InetAddress;
+import java.util.concurrent.Executors;
 
 public class ServerApplication {
 
@@ -19,6 +22,7 @@ public class ServerApplication {
     private ServerLoginView loginWindow;
 
     public ServerApplication(int port) {
+        executorService = Executors.newFixedThreadPool(10);
         databaseController = new DatabaseController();
         this.port = port;
         loginWindow = new ServerLoginView();
@@ -40,7 +44,6 @@ public class ServerApplication {
 
             while (true) {
                 executorService.execute(new ClientHandler(serverSocket.accept(), databaseController));
-
             }
 
         } catch (IOException e) {
@@ -59,6 +62,13 @@ public class ServerApplication {
                 databaseController.setUpDatabase(loginWindow.getUsername(), loginWindow.getPassword(), loginWindow.getDBName());
                 loginWindow.setVisible(false);
                 loginWindow.dispose();
+
+                try {
+                    databaseController.initializeDatabase();
+                    ServerView.print("Logged into database.");
+                } catch (SQLException e1) {
+                    ServerView.print("Failed to initialize databse: " + e1.getMessage());
+                }
 
             }
         };
