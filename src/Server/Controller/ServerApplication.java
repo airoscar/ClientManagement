@@ -2,7 +2,6 @@ package Server.Controller;
 
 import Server.Model.DatabaseController;
 import Server.ServerView;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.concurrent.ExecutorService;
@@ -23,6 +22,7 @@ public class ServerApplication {
 
         try {
             serverSocket = new ServerSocket(port);
+            ServerView serverView = new ServerView();
             ServerView.print("Server started..");
 
             InetAddress inetAddress = InetAddress.getLocalHost();

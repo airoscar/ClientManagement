@@ -3,13 +3,10 @@ package Server;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 public class ServerView extends JFrame {
 
-    private static JLabel serverStatLabel = new JLabel("Hello!", SwingConstants.CENTER);
-    private JButton startServerButton = new JButton("Start Server");
-    private JButton stopServerButton = new JButton("Stop Server");
+    private static JLabel serverStatLabel = new JLabel("Server logs", SwingConstants.CENTER);
     private static JTextArea messageField = new JTextArea();
 
 
@@ -20,7 +17,6 @@ public class ServerView extends JFrame {
         setLayout(new GridLayout(4, 1));
 
         this.add(serverStatusPanel());
-        this.add(serverButtonsPanel());
         this.add(messageAreaPanel());
         this.setResizable(false);
         this.setVisible(true);
@@ -32,15 +28,6 @@ public class ServerView extends JFrame {
         serverStatus.setLayout(new GridLayout(1,1,0, 0));
         serverStatus.add(serverStatLabel);
         return serverStatus;
-    }
-
-    private JPanel serverButtonsPanel () {
-        JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setBorder(new EmptyBorder(50, 60, 20, 60));
-        buttonsPanel.setLayout(new GridLayout(1, 2, 40, 0));
-        buttonsPanel.add(startServerButton);
-        buttonsPanel.add(stopServerButton);
-        return buttonsPanel;
     }
 
     private JPanel messageAreaPanel () {
@@ -62,29 +49,5 @@ public class ServerView extends JFrame {
         messageField.append(msg);
     }
 
-    public void setActionListeners (ActionListener startServer, Action stopServer){
-        startServerButton.addActionListener(startServer);
-        stopServerButton.addActionListener(stopServer);
-    }
-
-    public void disableStartButton(){
-        startServerButton.setEnabled(false);
-    }
-
-    public void enableStartButton(){
-        startServerButton.setEnabled(true);
-    }
-
-    public void disableStopButton() {
-        stopServerButton.setEnabled(false);
-    }
-
-    public void enableStopButton(){
-        stopServerButton.setEnabled(true);
-    }
-
-    public static void main(String[] args) {
-        ServerView a = new ServerView();
-    }
 
 }

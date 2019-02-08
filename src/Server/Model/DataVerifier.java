@@ -10,7 +10,6 @@ import java.util.regex.Pattern;
 public class DataVerifier {
 
     private Person personToBeVerified;
-    private Person correctedPerson;
 
     /**
      * Constructor for the DataVerifier class. This class is used to verify the values contained
