@@ -1,4 +1,4 @@
-package Client.ClientView;
+package Server;
 
 // ENSF 519-2 Java Project I
 // Server.Model.Person Management System

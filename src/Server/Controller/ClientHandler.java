@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class ClientHandler implements Runnable {
@@ -36,7 +37,12 @@ public class ClientHandler implements Runnable {
         try {
             ServerView.print("ClientHandler listening..");
             DataPack dataFromClient = (DataPack) in.readObject();
+            ServerView.print("DataPack received from client.");
+
             DataPack dataToClient = processDataFromClient(dataFromClient);
+            out.writeObject(dataFromClient);
+            ServerView.print("DataPack");
+
         } catch (IOException e) {
             ServerView.print("ClientHandler encountered an error receiving data from client: " + e.getMessage());
         } catch (ClassNotFoundException e) {
@@ -44,8 +50,15 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    /**
+     * Process a DataPack from client, reads the actionId, and return a DataPack.
+     * @param data
+     * @return
+     */
     private DataPack processDataFromClient(DataPack data) {
+        DataPack response = new DataPack();
         String msg = "";
+
         switch (data.getActionId()) {
 
             case 1: //add client
@@ -109,21 +122,32 @@ public class ClientHandler implements Runnable {
 
                 String search = data.getMsg(); //the search msg should be in the format of phrase,column
                 String[] searchCriteria = search.split(",");
-                String searchPhrase = searchCriteria[0];
-                String searchCol = searchCriteria[1];
+                String searchPhrase = searchCriteria[0].trim();
+                String searchCol = searchCriteria[1].trim();
 
-                //TODO: data verification and send to DataController
+                try {
+
+                    ArrayList<Person> results = databaseController.searchColumn(searchPhrase, searchCol);
+                    response.setData(results);
+                } catch (Exception e) {
+                    msg = e.getMessage();
+                }
 
                 break;
 
 
             default:
+                msg = "Unknown command.";
                 break;
         }
 
-        //TODO: return updated DataPack back to client with a msg
+        if (msg.equals("")){    //if no error messages appended to msg
+            msg = "success";
+        }
+
+        response.setMsg(msg);
 
 
-        return null;
+        return response;
     }
 }

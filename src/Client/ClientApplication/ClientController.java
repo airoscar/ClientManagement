@@ -1,7 +1,7 @@
 package Client.ClientApplication;
 
 import Client.ClientView.ClientAppView;
-import Client.ClientView.ClientLoginView;
+import Server.ClientLoginView;
 import Client.ClientView.LoadDataFromFile;
 import Shared.Person;
 
