@@ -1,7 +1,10 @@
 package Server.Controller;
 
 import Server.Model.DatabaseController;
+import Server.ServerLoginView;
 import Server.ServerView;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.concurrent.ExecutorService;
@@ -13,12 +16,18 @@ public class ServerApplication {
     private ExecutorService executorService;
     private int port;
     private DatabaseController databaseController;
+    private ServerLoginView loginWindow;
 
     public ServerApplication(int port) {
+        databaseController = new DatabaseController();
         this.port = port;
+        loginWindow = new ServerLoginView();
+        setUp();
+        start();
+
     }
 
-    public void start() {
+    private void start() {
 
         try {
             serverSocket = new ServerSocket(port);
@@ -39,10 +48,36 @@ public class ServerApplication {
         }
     }
 
+    /**
+     * Set up database log in. Initialize database. start View.
+     */
+    private void setUp() {
+
+        ActionListener okButtonListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                databaseController.setUpDatabase(loginWindow.getUsername(), loginWindow.getPassword(), loginWindow.getDBName());
+                loginWindow.setVisible(false);
+                loginWindow.dispose();
+
+            }
+        };
+
+        ActionListener canButtonListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loginWindow.setVisible(false);
+                loginWindow.dispose();
+            }
+        };
+
+        loginWindow.setActionListeners(okButtonListener, canButtonListener);
+        loginWindow.setVisible(true);
+    }
+
     public static void main(String[] args) {
 
         ServerApplication a = new ServerApplication(8989);
-        a.start();
 
 
     }

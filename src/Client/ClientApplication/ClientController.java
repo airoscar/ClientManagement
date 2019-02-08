@@ -1,7 +1,6 @@
 package Client.ClientApplication;
 
 import Client.ClientView.ClientAppView;
-import Server.ClientLoginView;
 import Client.ClientView.LoadDataFromFile;
 import Shared.Person;
 
@@ -20,14 +19,11 @@ import java.util.ArrayList;
 public class ClientController {
 
     private ClientAppView view;
-    private ClientLoginView loginWindow;
     private ServerConnector serverConnector;
 
     public ClientController(String serverAddress, int portNumber) {
         view = new ClientAppView();
-        loginWindow = new ClientLoginView();
         serverConnector = new ServerConnector(serverAddress, portNumber);
-        setUp();
     }
 
     /**
@@ -224,21 +220,20 @@ public class ClientController {
                 } catch (Exception error) {
                     JOptionPane.showMessageDialog(null, error.getMessage());
                 }
-                loginWindow.setVisible(false);
-                loginWindow.dispose();
+
             }
         };
 
-        ActionListener canButtonListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loginWindow.setVisible(false);
-                loginWindow.dispose();
-            }
-        };
-
-        loginWindow.setActionListeners(okButtonListener, canButtonListener);
-        loginWindow.setVisible(true);
+//        ActionListener canButtonListener = new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                loginWindow.setVisible(false);
+//                loginWindow.dispose();
+//            }
+//        };
+//
+//        loginWindow.setActionListeners(okButtonListener, canButtonListener);
+//        loginWindow.setVisible(true);
     }
 
     /**

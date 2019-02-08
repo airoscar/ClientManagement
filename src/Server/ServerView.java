@@ -12,7 +12,7 @@ public class ServerView extends JFrame {
 
     public ServerView() {
         setTitle("Server Monitor");
-        setSize(600, 600);
+        setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(4, 1));
 
@@ -24,7 +24,7 @@ public class ServerView extends JFrame {
 
     private JPanel serverStatusPanel (){
         JPanel serverStatus = new JPanel();
-        serverStatus.setBorder(new EmptyBorder(20,20,20,20));
+        serverStatus.setBorder(new EmptyBorder(10,10,10,10));
         serverStatus.setLayout(new GridLayout(1,1,0, 0));
         serverStatus.add(serverStatLabel);
         return serverStatus;
@@ -33,8 +33,8 @@ public class ServerView extends JFrame {
     private JPanel messageAreaPanel () {
         JPanel msgPanel = new JPanel();
         JScrollPane scrollMessageBoard = new JScrollPane(messageField);
-        scrollMessageBoard.setPreferredSize(new Dimension(500, 500));
-        msgPanel.setBorder(new EmptyBorder(10, 10, 2, 10));
+        scrollMessageBoard.setPreferredSize(new Dimension(800, 600));
+        msgPanel.setBorder(new EmptyBorder(3, 3, 2, 3));
         msgPanel.add(scrollMessageBoard);
         messageField.setEditable(false);
         return msgPanel;

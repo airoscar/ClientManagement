@@ -35,13 +35,15 @@ public class ClientHandler implements Runnable {
     public void run() {
 
         try {
-            ServerView.print("ClientHandler listening..");
-            DataPack dataFromClient = (DataPack) in.readObject();
-            ServerView.print("DataPack received from client.");
+            while (true) {
+                ServerView.print("ClientHandler listening for client..");
+                DataPack dataFromClient = (DataPack) in.readObject();
+                ServerView.print("DataPack received from client.");
 
-            DataPack dataToClient = processDataFromClient(dataFromClient);
-            out.writeObject(dataFromClient);
-            ServerView.print("DataPack");
+                DataPack dataToClient = processDataFromClient(dataFromClient);
+                out.writeObject(dataFromClient);
+                ServerView.print("DataPack sent to client");
+            }
 
         } catch (IOException e) {
             ServerView.print("ClientHandler encountered an error receiving data from client: " + e.getMessage());
@@ -52,6 +54,7 @@ public class ClientHandler implements Runnable {
 
     /**
      * Process a DataPack from client, reads the actionId, and return a DataPack.
+     *
      * @param data
      * @return
      */
@@ -135,18 +138,16 @@ public class ClientHandler implements Runnable {
 
                 break;
 
-
             default:
                 msg = "Unknown command.";
                 break;
         }
 
-        if (msg.equals("")){    //if no error messages appended to msg
+        if (msg.equals("")) {    //if no error messages appended to msg
             msg = "success";
         }
 
         response.setMsg(msg);
-
 
         return response;
     }

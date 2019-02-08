@@ -1,10 +1,5 @@
 package Server;
 
-// ENSF 519-2 Java Project I
-// Server.Model.Person Management System
-// Oscar Chen & Savith Jayasekera
-// November 5 2018
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -13,7 +8,7 @@ import java.awt.event.ActionListener;
 /**
  * This class handles view of log in screen.
  */
-public class ClientLoginView extends JFrame {
+public class ServerLoginView extends JFrame {
 
     private JTextField usernameField = new JTextField("root",15);
     private JPasswordField passwordField = new JPasswordField(15);
@@ -21,7 +16,7 @@ public class ClientLoginView extends JFrame {
     private JButton okButton = new JButton("OK");
     private JButton cancelButton = new JButton("Cancel");
 
-    public ClientLoginView(){
+    public ServerLoginView(){
         setTitle("Login to Database");
         setSize(450, 350);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -141,5 +136,10 @@ public class ClientLoginView extends JFrame {
 
     public String getDBName (){
         return dbNameField.getText();
+    }
+
+    public static void main(String[] args) {
+        ServerLoginView a = new ServerLoginView();
+
     }
 }
