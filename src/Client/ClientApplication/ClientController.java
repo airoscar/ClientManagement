@@ -37,8 +37,6 @@ public class ClientController {
 
     /**
      * Called upon when the search button is pressed.
-     *
-     * @throws Exception
      */
     private void searchButtonPressed() throws Exception {
         view.clearSearchResults();
@@ -49,7 +47,8 @@ public class ClientController {
         int selectedButton = view.getSelectedSearchButton();//Read radio button selection
 
         if (selectedButton == 0) {  //generate 'column' attribute based on radio button selection
-            JOptionPane.showMessageDialog(null, "Please make a selection before clicking the search button");
+            JOptionPane.showMessageDialog(null, "Please make a selection " +
+                    "before clicking the search button");
             return;
         } else if (selectedButton == 1) {
             column = "id";
@@ -58,8 +57,14 @@ public class ClientController {
         } else if (selectedButton == 3) {
             column = "clientType";
         }
+
         searchResults = serverConnector.sendSearchResultDataPack(phrase, column);
-        view.setSearchResults(searchResults);
+
+        if (searchResults != null) {
+            view.setSearchResults(searchResults);
+        } else {
+            JOptionPane.showMessageDialog(null, "Search failed.");
+        }
     }
 
     /**
@@ -78,27 +83,40 @@ public class ClientController {
         person.setClientType(view.getClientType());
 
         if (view.getClientID().equalsIgnoreCase("")) {
-            //TODO: create the addClient method and call it here
+            if (serverConnector.wasClientAdditionSuccessful(person)){
+                JOptionPane.showMessageDialog(null, "Client added successfully.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Client addition failed.");
+            }
+
         } else {
-            //TODO: create the updateClient method and call it here
+            if (serverConnector.wasClientModificationSuccessful(person)){
+                JOptionPane.showMessageDialog(null, "Client modified successfully.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Client modification failed.");
+            }
         }
-        searchButtonPressed();
+        view.clearClientInformation();
+        view.clearSearchResults();
     }
 
     /**
      * Gets called when the delete button is pressed.
      *
-     * @throws Exception
      */
     private void deleteButtonPressed() throws Exception {
         String clientID = view.getClientID();
         if (clientID.equalsIgnoreCase("")) {
             return;
         } else {
-            //TODO: create the deleteClient method and call it here
+            if (serverConnector.wasClientDeletionSuccessful(clientID)){
+                JOptionPane.showMessageDialog(null, "Client deleted successfully.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Client deletion failed.");
+            }
         }
         view.clearClientInformation();
-        searchButtonPressed();
+        view.clearSearchResults();
     }
 
     private void listClicked() {
@@ -241,7 +259,7 @@ public class ClientController {
         String line;
         while ((line = reader.readLine()) != null) {
             System.out.println(line);
-            String [] details = line.split(";");
+            String[] details = line.split(";");
             Person person = new Person();
             person.setFirstName(details[0]);
             person.setLastName(details[1]);
