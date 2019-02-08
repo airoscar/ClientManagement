@@ -34,8 +34,9 @@ public class ServerConnector {
     private DataPack sendToServer(DataPack data) {
         DataPack responseFromServer = null;
         try {
-            System.out.println("Sent to server: " + data);
             out.writeObject(data);
+            System.out.println("Sent to server: " + data);
+
             responseFromServer = (DataPack) in.readObject();
             System.out.println("Received from server: " + responseFromServer);
 

@@ -10,7 +10,7 @@ public class DataPack implements Serializable {
     private static final long serialversionUID = 666L;
     private int actionId;   // 1 - add; 2 - update/edit; 3 - delete; 4 - search
     private String msg;
-    private ArrayList<Person> data;
+    private ArrayList<Person> data = new ArrayList<>();
 
     public DataPack() {
     }

@@ -41,7 +41,7 @@ public class ClientHandler implements Runnable {
                 ServerView.print("Received from client: " + dataFromClient);
 
                 DataPack dataToClient = processDataFromClient(dataFromClient);
-                out.writeObject(dataFromClient);
+                out.writeObject(dataToClient);
                 ServerView.print("Sent to client: " + dataToClient);
             }
 

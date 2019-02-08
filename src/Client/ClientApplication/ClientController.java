@@ -31,7 +31,7 @@ public class ClientController {
     /**
      * Called upon when the search button is pressed.
      */
-    private void searchButtonPressed() throws Exception {
+    private void searchButtonPressed() {
         view.clearSearchResults();
         String phrase = view.getSearchBoxTextFieldText();   //phrase to search for
         String column = "";     //the column in which to search for the phrase
@@ -65,7 +65,7 @@ public class ClientController {
      *
      * @throws Exception
      */
-    private void saveButtonPressed() throws Exception {
+    private void saveButtonPressed() {
         Person person = new Person();
         person.setDataID(view.getClientID());
         person.setFirstName(view.getFirstName());
@@ -97,7 +97,7 @@ public class ClientController {
      * Gets called when the delete button is pressed.
      *
      */
-    private void deleteButtonPressed() throws Exception {
+    private void deleteButtonPressed() {
         String clientID = view.getClientID();
         if (clientID.equalsIgnoreCase("")) {
             return;
