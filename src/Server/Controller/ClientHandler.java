@@ -109,9 +109,8 @@ public class ClientHandler implements Runnable {
                     Iterator<Person> it = data.getData().iterator();
 
                     while (it.hasNext()) {
-                        Person person;
+                        Person person = it.next();
                         try {
-                            person = new DataVerifier().verifyInput(it.next());
                             databaseController.deleteClient(person.getDataID());
                         } catch (Exception e) {
                             msg = msg + "/n" + e.getMessage();

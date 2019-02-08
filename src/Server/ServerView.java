@@ -22,7 +22,7 @@ public class ServerView extends JFrame {
     private JPanel messageAreaPanel () {
         JPanel msgPanel = new JPanel();
         JScrollPane scrollMessageBoard = new JScrollPane(messageField);
-        scrollMessageBoard.setPreferredSize(new Dimension(800, 600));
+        scrollMessageBoard.setPreferredSize(new Dimension(800, 550));
         msgPanel.add(scrollMessageBoard);
         messageField.setEditable(false);
         return msgPanel;
