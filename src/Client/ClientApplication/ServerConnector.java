@@ -63,7 +63,7 @@ public class ServerConnector {
 
     private boolean processServerResponse(DataPack serverResponse){
         if (serverResponse != null){    //if server message is "success", return true
-            return serverResponse.getMsg().equals("success");
+            return serverResponse.getMsg().equalsIgnoreCase("success");
         }
         return false;
     }

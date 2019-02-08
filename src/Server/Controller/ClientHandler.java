@@ -107,6 +107,12 @@ public class ClientHandler implements Runnable {
 
             case 4: //search for client
 
+                String search = data.getMsg(); //the search msg should be in the format of phrase,column
+                String[] searchCriteria = search.split(",");
+                String searchPhrase = searchCriteria[0];
+                String searchCol = searchCriteria[1];
+
+                //TODO: data verification and send to DataController
 
                 break;
 
