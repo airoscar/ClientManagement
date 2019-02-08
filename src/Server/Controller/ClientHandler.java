@@ -45,10 +45,11 @@ public class ClientHandler implements Runnable {
     }
 
     private DataPack processDataFromClient(DataPack data) {
-
+        String msg = "";
         switch (data.getActionId()) {
+
             case 1: //add client
-                String msg = "";
+
                 if (data.getNumerOfPersons() > 0) {
 
                     Iterator<Person> it = data.getData().iterator();
@@ -63,21 +64,44 @@ public class ClientHandler implements Runnable {
                             msg = msg + "/n" + e.getMessage();
                         }
                     }
-
-
                 }
-
 
                 break;
 
             case 2: //edit client
 
+                if (data.getNumerOfPersons() > 0) {
+                    Iterator<Person> it = data.getData().iterator();
+
+                    while (it.hasNext()) {
+                        Person person;
+                        try {
+                            person = new DataVerifier().verifyInput(it.next());
+                            databaseController.updateClient(person);
+                        } catch (Exception e) {
+                            msg = msg + "/n" + e.getMessage();
+                        }
+                    }
+                }
 
                 break;
 
 
             case 3: // delete client
 
+                if (data.getNumerOfPersons() > 0) {
+                    Iterator<Person> it = data.getData().iterator();
+
+                    while (it.hasNext()) {
+                        Person person;
+                        try {
+                            person = new DataVerifier().verifyInput(it.next());
+                            databaseController.deleteClient(person.getDataID());
+                        } catch (Exception e) {
+                            msg = msg + "/n" + e.getMessage();
+                        }
+                    }
+                }
 
                 break;
 
@@ -90,11 +114,8 @@ public class ClientHandler implements Runnable {
             default:
                 break;
         }
-        if (data.getActionId() == 1) {   //add client
 
-        }
-
-//        DataVerifier verify = new DataVerifier();
+        //TODO: return updated DataPack back to client with a msg
 
 
         return null;
