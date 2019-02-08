@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Data Model used to communicate between client and server via socket
  */
 public class DataPack {
-    private int actionId;
+    private int actionId;   // 1 - add; 2 - update/edit; 3 - delete; 4 - search
     private String msg;
     private ArrayList<Person> data;
 
@@ -57,5 +57,13 @@ public class DataPack {
 
     public ArrayList<Person> getData() {
         return data;
+    }
+
+    public int getNumerOfPersons(){
+        if (data ==null){
+            return 0;
+        } else {
+            return data.size();
+        }
     }
 }
