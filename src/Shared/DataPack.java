@@ -35,6 +35,11 @@ public class DataPack {
         this.data = data;
     }
 
+    public DataPack(int actionId, ArrayList<Person> listOfPersons){
+        this.actionId = actionId;
+        data = listOfPersons;
+    }
+
     public void setActionId(int actionId) {
         this.actionId = actionId;
     }

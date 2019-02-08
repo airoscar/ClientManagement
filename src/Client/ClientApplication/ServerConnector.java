@@ -45,29 +45,6 @@ public class ServerConnector {
         return responseFromServer;
     }
 
-
-    public boolean wasClientAdditionSuccessful(Person personToAdd){
-        DataPack serverResponse = sendToServer(new DataPack(1,personToAdd));
-        return processServerResponse(serverResponse);
-    }
-
-    public boolean wasClientModificationSuccessful(Person personToModify) {
-        DataPack serverResponse = sendToServer(new DataPack(2, personToModify));
-        return processServerResponse(serverResponse);
-    }
-
-    public boolean wasClientDeletionSuccessful(String clientID){
-        DataPack serverResponse = sendToServer(new DataPack(2,clientID));
-        return processServerResponse(serverResponse);
-    }
-
-    private boolean processServerResponse(DataPack serverResponse){
-        if (serverResponse != null){    //if server message is "success", return true
-            return serverResponse.getMsg().equalsIgnoreCase("success");
-        }
-        return false;
-    }
-
     /**
      * Sends the appropriate datapack to the server when the client presses the search button. Returns the
      * arraylist of person objects returned from the server. If an error occurred, returns null
@@ -80,4 +57,30 @@ public class ServerConnector {
         return null;
     }
 
+    public String sendMultipleClientsToAddToDatabase(ArrayList<Person> listOfPeople){
+        DataPack serverResponse = sendToServer(new DataPack(1, listOfPeople));
+        return serverResponse.getMsg();
+    }
+
+    public boolean wasClientAdditionSuccessful(Person personToAdd){
+        DataPack serverResponse = sendToServer(new DataPack(1,personToAdd));
+        return processServerResponse(serverResponse);
+    }
+
+    public boolean wasClientModificationSuccessful(Person personToModify) {
+        DataPack serverResponse = sendToServer(new DataPack(2, personToModify));
+        return processServerResponse(serverResponse);
+    }
+
+    public boolean wasClientDeletionSuccessful(Person personToDelete){
+        DataPack serverResponse = sendToServer(new DataPack(3,personToDelete));
+        return processServerResponse(serverResponse);
+    }
+
+    private boolean processServerResponse(DataPack serverResponse){
+        if (serverResponse != null){
+            return serverResponse.getMsg().equalsIgnoreCase("success");     //if server message is "success", return true
+        }
+        return false;
+    }
 }

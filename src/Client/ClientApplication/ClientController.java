@@ -104,7 +104,7 @@ public class ClientController {
         if (clientID.equalsIgnoreCase("")) {
             return;
         } else {
-            if (serverConnector.wasClientDeletionSuccessful(clientID)){
+            if (serverConnector.wasClientDeletionSuccessful(new Person(clientID))){
                 JOptionPane.showMessageDialog(null, "Client deleted successfully.");
             } else {
                 JOptionPane.showMessageDialog(null, "Client deletion failed.");
@@ -203,7 +203,7 @@ public class ClientController {
             return;
         }
         try {
-            //TODO: create uploadFileToServer and call it here
+            JOptionPane.showMessageDialog(null, populatePersonsFromFile(reader));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
@@ -249,9 +249,12 @@ public class ClientController {
      * first name; last name; address; postal code; phone number; client type </br>
      * See example txt file.
      */
-    public void uploadFileToDatabase(BufferedReader reader) throws Exception {
+    public String populatePersonsFromFile(BufferedReader reader) throws Exception {
+
+        ArrayList<Person> clientsReadFromFile = new ArrayList<>();
 
         String line;
+
         while ((line = reader.readLine()) != null) {
             System.out.println(line);
             String[] details = line.split(";");
@@ -262,7 +265,9 @@ public class ClientController {
             person.setPostalCode(details[3]);
             person.setPhoneNumber(details[4]);
             person.setClientType(details[5]);
-            //addClient(person);  //TODO: add to a arraylist and send
+
+            clientsReadFromFile.add(person);
         }
+        return serverConnector.sendMultipleClientsToAddToDatabase(clientsReadFromFile);
     }
 }
