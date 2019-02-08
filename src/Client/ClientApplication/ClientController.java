@@ -213,7 +213,6 @@ public class ClientController {
         ActionListener okButtonListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO: Can create login window and create it here
                 try {
                     setUpView();
                     readDataFromFile();
