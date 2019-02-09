@@ -15,13 +15,11 @@ import java.util.Iterator;
 
 public class ClientHandler implements Runnable {
     private DatabaseController databaseController;
-    private Socket socket;
     private ObjectInputStream in;
     private ObjectOutputStream out;
 
     public ClientHandler(Socket socket, DatabaseController databaseController) {
         this.databaseController = databaseController;
-        this.socket = socket;
         try {
             in = new ObjectInputStream(socket.getInputStream());
             out = new ObjectOutputStream(socket.getOutputStream());

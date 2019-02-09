@@ -3,6 +3,7 @@ package Client.ClientApplication;
 import javax.swing.*;
 
 public class ClientApplication {
+
     public static void main(String[] args) {
         try {
             String serverAddress = JOptionPane.showInputDialog(null,

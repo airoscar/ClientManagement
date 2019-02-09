@@ -15,9 +15,9 @@ import java.io.FileReader;
  * This class is used to display a series of prompts for users to input a text file, </br>
  * which contains clients info to be uploaded to the database.
  */
-public class LoadDataFromFile {
+public class LoadDataFromFileView {
 
-    public LoadDataFromFile () {
+    public LoadDataFromFileView() {
 
     }
 

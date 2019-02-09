@@ -1,7 +1,7 @@
 package Client.ClientApplication;
 
 import Client.ClientView.ClientAppView;
-import Client.ClientView.LoadDataFromFile;
+import Client.ClientView.LoadDataFromFileView;
 import Shared.Person;
 
 import javax.swing.*;
@@ -196,7 +196,7 @@ public class ClientController {
      * Prompt user to upload data from text file to database.
      */
     private void readDataFromFile() {
-        BufferedReader reader = new LoadDataFromFile().getBufferedReader();
+        BufferedReader reader = new LoadDataFromFileView().getBufferedReader();
         if (reader == null) {
             return;
         }
