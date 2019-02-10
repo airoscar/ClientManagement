@@ -13,7 +13,7 @@ public class ClientApplication {
             new ClientController(serverAddress, port);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error Connecting to " +
-                    "specified server. Game will quit");
+                    "specified server. Program will quit");
         }
     }
 }

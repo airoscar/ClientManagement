@@ -82,7 +82,7 @@ public class ClientHandler implements Runnable {
                             databaseController.addClient(person);
 
                         } catch (Exception e) {
-                            msg = msg + "/n" + e.getMessage();
+                            msg = msg + "\n" + e.getMessage();
                         }
                     }
                 }
@@ -100,7 +100,7 @@ public class ClientHandler implements Runnable {
                             person = new DataVerifier().verifyInput(it.next());
                             databaseController.updateClient(person);
                         } catch (Exception e) {
-                            msg = msg + "/n" + e.getMessage();
+                            msg = msg + "\n" + e.getMessage();
                         }
                     }
                 }
@@ -118,7 +118,7 @@ public class ClientHandler implements Runnable {
                         try {
                             databaseController.deleteClient(person.getDataID());
                         } catch (Exception e) {
-                            msg = msg + "/n" + e.getMessage();
+                            msg = msg + "\n" + e.getMessage();
                         }
                     }
                 }

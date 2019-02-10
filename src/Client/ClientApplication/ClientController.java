@@ -75,34 +75,64 @@ public class ClientController {
         person.setPhoneNumber(view.getPhoneNumber());
         person.setClientType(view.getClientType());
 
-        if (view.getClientID().equalsIgnoreCase("")) {
-            if (serverConnector.wasClientAdditionSuccessful(person)){
-                JOptionPane.showMessageDialog(null, "Client added successfully.");
-            } else {
-                JOptionPane.showMessageDialog(null, "Client addition failed.");
-            }
-
-        } else {
-            if (serverConnector.wasClientModificationSuccessful(person)){
-                JOptionPane.showMessageDialog(null, "Client modified successfully.");
-            } else {
-                JOptionPane.showMessageDialog(null, "Client modification failed.");
-            }
+        if (view.getClientID().equalsIgnoreCase("")) {      //client id doesn't exist; therefore, must be new client
+            addClient(person);
+        } else {    //client id exists, need to modify existing client
+            modifyClient(person);
         }
         view.clearClientInformation();
         view.clearSearchResults();
     }
 
     /**
+     * Helper method used by the saveButtonPressed method. Performs the necessary tasks
+     * to add the specified client to the database.
+     */
+    private void addClient(Person person){
+        Object[] serverResponse;
+        serverResponse = serverConnector.addClientToDatabase(person);
+
+        if (serverResponse == null) {     //error getting server response
+            JOptionPane.showMessageDialog(null, "Client addition failed: Error getting response from server");
+        } else {     //successfully received response from server
+            String message = (String) serverResponse[0];
+            if (message.equalsIgnoreCase("success")) {
+                JOptionPane.showMessageDialog(null, "Client addition successful");
+            } else {
+                JOptionPane.showMessageDialog(null, "Client addition failed: " + message);
+            }
+        }
+    }
+
+    /**
+     * Helper method used by the saveButtonPressed method. Performs the necessary tasks
+     * to modify the specified client on the database.
+     */
+    private void modifyClient(Person person){
+        Object[] serverResponse;
+        serverResponse = serverConnector.modifyClientOnDatabase(person);
+
+        if (serverResponse == null) {     //error getting server response
+            JOptionPane.showMessageDialog(null, "Client modification failed: Error getting response from server");
+        } else {     //successfully received response from server
+            String message = (String) serverResponse[0];
+            if (message.equalsIgnoreCase("success")) {
+                JOptionPane.showMessageDialog(null, "Client modification successful");
+            } else {
+                JOptionPane.showMessageDialog(null, "Client modification failed: " + message);
+            }
+        }
+    }
+
+    /**
      * Gets called when the delete button is pressed.
-     *
      */
     private void deleteButtonPressed() {
         String clientID = view.getClientID();
         if (clientID.equalsIgnoreCase("")) {
             return;
         } else {
-            if (serverConnector.wasClientDeletionSuccessful(new Person(clientID))){
+            if (serverConnector.wasClientDeletionSuccessful(new Person(clientID))) {
                 JOptionPane.showMessageDialog(null, "Client deleted successfully.");
             } else {
                 JOptionPane.showMessageDialog(null, "Client deletion failed.");

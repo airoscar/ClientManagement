@@ -66,6 +66,7 @@ public class ServerConnector {
 
     /**
      * Called upon to send a list of clients to the server to be added to the database.
+     *
      * @param listOfPeople
      * @return
      */
@@ -76,43 +77,50 @@ public class ServerConnector {
 
     /**
      * Called upon to send a single client to the server to be added to the database.
+     *
      * @param personToAdd
      * @return
      */
-    public boolean wasClientAdditionSuccessful(Person personToAdd) {
+    public Object[] addClientToDatabase(Person personToAdd) {
         DataPack serverResponse = sendToServer(new DataPack(1, personToAdd));
         return processServerResponse(serverResponse);
     }
 
     /**
      * Called upon to send a single client to the server to be edited in the database.
+     *
      * @param personToModify
      * @return
      */
-    public boolean wasClientModificationSuccessful(Person personToModify) {
+    public Object[] modifyClientOnDatabase(Person personToModify) {
         DataPack serverResponse = sendToServer(new DataPack(2, personToModify));
         return processServerResponse(serverResponse);
     }
 
     /**
      * Called upon to send a single client to the server to be deleted from the database.
+     *
      * @param personToDelete
      * @return
      */
     public boolean wasClientDeletionSuccessful(Person personToDelete) {
         DataPack serverResponse = sendToServer(new DataPack(3, personToDelete));
-        return processServerResponse(serverResponse);
+        if (serverResponse != null) {
+            return serverResponse.getMsg().equalsIgnoreCase("success");
+        }
+        return false;
     }
 
     /**
      * Called upon to process response data from server.
+     *
      * @param serverResponse
      * @return
      */
-    private boolean processServerResponse(DataPack serverResponse) {
+    private Object[] processServerResponse(DataPack serverResponse) {
         if (serverResponse != null) {
-            return serverResponse.getMsg().equalsIgnoreCase("success");     //if server message is "success", return true
+            return new Object[]{serverResponse.getMsg(), serverResponse.getData()};
         }
-        return false;
+        return null;
     }
 }
