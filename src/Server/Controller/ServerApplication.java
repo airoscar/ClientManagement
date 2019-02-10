@@ -13,6 +13,9 @@ import java.util.concurrent.ExecutorService;
 import java.net.InetAddress;
 import java.util.concurrent.Executors;
 
+/**
+ * Runs the server.
+ */
 public class ServerApplication {
 
     private ServerSocket serverSocket;
@@ -30,6 +33,9 @@ public class ServerApplication {
         start();
     }
 
+    /**
+     * Starts server on a port, sets up thread pool.
+     */
     private void start() {
 
         try {

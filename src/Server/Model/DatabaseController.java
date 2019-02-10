@@ -1,14 +1,7 @@
 package Server.Model;
 
-// ENSF 519-2 Java Project I
-// Server.Model.Person Management System
-// Oscar Chen & Savith Jayasekera
-// November 5 2018
-
-import Server.ServerView;
 import Shared.*;
 
-import java.io.BufferedReader;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Map;

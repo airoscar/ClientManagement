@@ -64,26 +64,51 @@ public class ServerConnector {
         return null;
     }
 
+    /**
+     * Called upon to send a list of clients to the server to be added to the database.
+     * @param listOfPeople
+     * @return
+     */
     public String sendMultipleClientsToAddToDatabase(ArrayList<Person> listOfPeople) {
         DataPack serverResponse = sendToServer(new DataPack(1, listOfPeople));
         return serverResponse.getMsg();
     }
 
+    /**
+     * Called upon to send a single client to the server to be added to the database.
+     * @param personToAdd
+     * @return
+     */
     public boolean wasClientAdditionSuccessful(Person personToAdd) {
         DataPack serverResponse = sendToServer(new DataPack(1, personToAdd));
         return processServerResponse(serverResponse);
     }
 
+    /**
+     * Called upon to send a single client to the server to be edited in the database.
+     * @param personToModify
+     * @return
+     */
     public boolean wasClientModificationSuccessful(Person personToModify) {
         DataPack serverResponse = sendToServer(new DataPack(2, personToModify));
         return processServerResponse(serverResponse);
     }
 
+    /**
+     * Called upon to send a single client to the server to be deleted from the database.
+     * @param personToDelete
+     * @return
+     */
     public boolean wasClientDeletionSuccessful(Person personToDelete) {
         DataPack serverResponse = sendToServer(new DataPack(3, personToDelete));
         return processServerResponse(serverResponse);
     }
 
+    /**
+     * Called upon to process response data from server.
+     * @param serverResponse
+     * @return
+     */
     private boolean processServerResponse(DataPack serverResponse) {
         if (serverResponse != null) {
             return serverResponse.getMsg().equalsIgnoreCase("success");     //if server message is "success", return true

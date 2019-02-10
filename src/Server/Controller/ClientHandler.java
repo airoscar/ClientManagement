@@ -13,6 +13,10 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * This class is created for each client socket that connects to the server threadpool. <br>
+ * Handles input and output operations and communicate with the client.
+ */
 public class ClientHandler implements Runnable {
     private DatabaseController databaseController;
     private ObjectInputStream in;
@@ -29,6 +33,9 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    /**
+     * Listens for client, forward data to other methods to process, return reply data to client.
+     */
     @Override
     public void run() {
 

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class DataPack implements Serializable {
     private static final long serialversionUID = 666L;
     private int actionId;   // 1 - add; 2 - update/edit; 3 - delete; 4 - search
-    private String msg;
+    private String msg;     //messages to be passed between client and server.
     private ArrayList<Person> data = new ArrayList<>();
 
     public DataPack() {

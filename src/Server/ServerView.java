@@ -3,6 +3,9 @@ package Server;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Server monitor view which shows logging messages, closing the view would shut down the server.
+ */
 public class ServerView extends JFrame {
 
     private static JTextArea messageField = new JTextArea();
